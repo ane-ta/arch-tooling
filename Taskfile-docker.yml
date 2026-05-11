@@ -1,0 +1,37 @@
+version: '3'
+
+vars:
+  DOCKER_PANDOC_IMAGE_NAME: 'my-pandoc-task'
+
+tasks:
+# =====================
+  build:
+    desc: "Собрать образ с Task и Pandoc"
+    requires:
+      vars: [DOCKER_PANDOC_IMAGE_NAME]
+    cmds:
+      - docker build -t {{.DOCKER_PANDOC_IMAGE_NAME}} .
+
+# =====================
+  run:
+    desc: "Запустить рендер внутри докера"
+    requires:
+      vars: [TASKFILE_DIR, SOURCE_PATH, DEST_PATH]
+    vars:
+      SILENT: '{{.SILENT | default false}}'
+      FORCE: '{{.FORCE | default false}}'
+        
+    cmds:
+      # Мы монтируем текущую папку и вызываем таску 'render-dir' внутри контейнера
+      - >
+        docker run --rm 
+        -v "{{.TASKFILE_DIR}}:/work"
+        -v "{{.SOURCE_PATH}}:/work/data-source" 
+        -v "{{.DEST_PATH}}:/work/data-result" 
+        -w /work
+        {{.DOCKER_PANDOC_IMAGE_NAME}} 
+        render-dir 
+        SOURCE_DIR="data-source"
+        DEST_DIR="data-result"
+        {{if .SILENT}}--silent{{end}}
+        {{if .FORCE}}--force{{end}}
