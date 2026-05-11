@@ -10,16 +10,54 @@ vars:
   DEST_DIR: '{{.DEST_DIR | default "../docs-result"}}'
 
 tasks:
-######################
+# =====================
   transform-org-to-md:
     requires:
       vars: [SOURCE_FILE, DEST_FILE]
     cmds:
+      - echo "Start processing org file..."
       - echo "from -> {{.SOURCE_FILE}}"
       - echo "to   -> {{.DEST_FILE}}"
       - pandoc "{{.SOURCE_FILE}}" -f org -t gfm+raw_html -o "{{.DEST_FILE}}" --wrap=none
+      - task: post-process
+        vars:
+          DEST_FILE: '{{.DEST_FILE}}'
+      - echo "-------------------"
+     
+  post-process:
+    internal: true
+    cmds:
+      - task: post-process-{{OS}}
+        vars: 
+          DEST_FILE: '{{.DEST_FILE}}'
 
-######################
+  # Реализация для Linux (в Докере)
+  post-process-linux:
+    internal: true
+    cmds:
+      - sed -i -E 's|\\<br/?\\>|<br>|g' "{{.DEST_FILE}}"   # \<br\> -> <br>
+      - sed -i -E 's|\\\*|\*|g' "{{.DEST_FILE}}"           # \* -> *
+    # -i: Изменяет файл на месте (in-place).
+    # -E: Включает расширенные регулярные выражения.
+
+    # s/: заменить
+    # \\ \
+    # () группа 1
+    # <br текст
+    # \/? возможный слэш
+    # > текст
+    # / разделитель, закончили шаблон.
+    # \1 заменить на группу 1
+    # / разделитель, закончили шаблон.
+    # g: global — заменить все вхождения в строке, а не только первое.
+
+  # Реализация для Windows (заглушка)
+  post-process-windows:
+    internal: true
+    cmds:
+      - echo "Локальная очистка на Windows не поддерживается. Используйте Docker."
+
+# =====================
   render-file:
     internal: true
     requires:
@@ -42,7 +80,7 @@ tasks:
           SOURCE_FILE: '{{.SOURCE_FILE}}'
           DEST_FILE: '{{.DEST_FILE}}'
 
-######################
+# =====================
   render-dir:
     desc: "Рендер с сохранением структуры: task render-dir SOURCE_DIR=./docs DEST_DIR=./docs-result" 
     requires:
