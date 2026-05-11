@@ -1,0 +1,64 @@
+version: '3'
+
+vars:
+  SOURCE_DIR: '{{.SOURCE_DIR | default "../docs"}}'
+  DEST_DIR: '{{.DEST_DIR | default "../docs-result"}}'
+
+tasks:
+######################
+  transform-org-to-md:
+    requires:
+      vars: [SOURCE_FILE, DEST_FILE]
+    cmds:
+      - echo "from -> {{.SOURCE_FILE}}"
+      - echo "to   -> {{.DEST_FILE}}"
+      - pandoc "{{.SOURCE_FILE}}" -f org -t gfm+raw_html -o "{{.DEST_FILE}}" --wrap=none
+
+######################
+  render-file:
+    internal: true
+    requires:
+      vars: [SOURCE_FILE, SOURCE_ROOT, DEST_DIR]
+    vars:
+      # Получаем относительный хвост
+      REL_SOURCE_FILE: '{{relPath .SOURCE_ROOT .SOURCE_FILE}}'
+      # Меняем расширение
+      REL_DEST_FILE: '{{replace ".org" ".md" .REL_SOURCE_FILE}}'
+      # Путь к итоговому файлу
+      DEST_FILE: '{{joinPath .DEST_DIR .REL_DEST_FILE}}'
+      # # Путь к папке итогового файла
+      # FINAL_DIR: '{{dir .DEST_PATH}}'
+
+    cmds:
+      # Теперь mkdir -p создаст всё дерево папок внутри docs-result
+      # - mkdir -p "{{.FINAL_DIR}}"
+      - task: transform-org-to-md
+        vars:
+          SOURCE_FILE: '{{.SOURCE_FILE}}'
+          DEST_FILE: '{{.DEST_FILE}}'
+
+######################
+  render-dir:
+    desc: "Рендер с сохранением структуры: task render-dir SOURCE_DIR=../docs DEST_DIR=../docs-result" 
+    requires:
+      vars: [SOURCE_DIR, DEST_DIR]
+    vars:
+      SOURCE_DIR: '{{.SOURCE_DIR | fromSlash}}'
+      DEST_DIR: '{{.DEST_DIR | fromSlash}}'
+    sources:
+      - '{{joinPath .SOURCE_DIR "**/*.org"}}'
+      - '{{joinPath .SOURCE_DIR "*.org"}}'
+    generates:
+      - '{{joinPath .DEST_DIR "**/*.md"}}'
+
+    cmds:
+      - echo "==================="
+      - echo "Rendering org to md"
+      - echo "Source Root - {{.SOURCE_DIR}}"
+      - echo "Dest Root - {{.DEST_DIR}}"
+      - for: sources
+        task: render-file
+        vars:
+          SOURCE_FILE: '{{.ITEM}}'
+          SOURCE_ROOT: '{{.SOURCE_DIR}}'
+          DEST_DIR: '{{.DEST_DIR}}'
