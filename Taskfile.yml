@@ -2,12 +2,12 @@ version: '3'
 
 includes:
   org-to-md:docker: 
-    taskfile: ./Taskfile-docker.yml
+    taskfile: ./org/Taskfile-docker.yml
 
   org-to-md: 
-    taskfile: ./Taskfile-org-to-md.yml
+    taskfile: ./org/Taskfile-org-to-md.yml
 
   dsl: 
-    taskfile: ./Taskfile-dsl.yml
+    taskfile: ./dsl/Taskfile-dsl.yml
 
       

@@ -7,7 +7,7 @@ tasks:
     desc: "Export Structurizr DSL to PlantUML (C4)"
     requires:
       vars:
-        [WORKSPACE_PATH, DEST_PATH]
+        [WORKSPACE_PATH, DEST_DIR]
     vars:
       WORKSPACE_DIR: '{{dir .WORKSPACE_PATH}}'
       WORKSPACE_FILENAME: '{{base .WORKSPACE_PATH}}'
@@ -15,7 +15,7 @@ tasks:
       - >
         docker run --rm 
         -v "{{.WORKSPACE_DIR}}:/usr/local/structurizr" 
-        -v "{{.DEST_PATH}}:/usr/local/structurizr/result"
+        -v "{{.DEST_DIR}}:/usr/local/structurizr/result"
         structurizr/structurizr export 
         -workspace /usr/local/structurizr/{{.WORKSPACE_FILENAME}}
         -format plantuml/c4plantuml 
