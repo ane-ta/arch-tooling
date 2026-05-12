@@ -2,12 +2,12 @@ version: '3'
 
 vars:
   DOCKER_PANDOC_IMAGE_NAME: 'my-pandoc-task'
-  RENDER_DIR_TASK: 'org-to-md:render-dir'
+  RENDER_DIR_TASK: 'org-to-md:render-tree'
 
 tasks:
 # =====================
   build:
-    desc: "Собрать образ с Task и Pandoc"
+    desc: "Prepare docker image to render Org -> MD"
     requires:
       vars: [DOCKER_PANDOC_IMAGE_NAME]
     cmds:
@@ -15,7 +15,7 @@ tasks:
 
 # =====================
   run:
-    desc: "Запустить рендер внутри докера"
+    desc: "Render Org tree -> MD tree in Docker"
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
     vars:

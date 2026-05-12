@@ -4,7 +4,8 @@ tasks:
 
 # =====================
   dsl-to-puml:
-    desc: "Export Structurizr DSL to PlantUML (C4)"
+    desc: "Structurizr DSL workspace -> PlantUML (C4) dir"
+    internal: true
     requires:
       vars:
         [WORKSPACE_PATH, DEST_DIR]
@@ -23,7 +24,8 @@ tasks:
 
 # =====================
   puml-to-svg:
-    desc: "Render PlantUML diagrams to SVG"
+    desc: "PlantUML dir -> SVG dir"
+    internal: true
     requires:
       vars:
         [PUML_SOURCE_DIR, SVG_DEST_DIR]
@@ -39,7 +41,7 @@ tasks:
   
 # =====================
   export:
-    desc: "Full architecture update: DSL -> PUML -> SVG"
+    desc: "Structurizr DSL workspace -> PUML dir -> SVG dir"
     requires:
       vars: [WORKSPACE_PATH, PUML_DIR, SVG_DIR]
     cmds:
@@ -56,7 +58,7 @@ tasks:
 
 # =====================
   launch:
-    desc: "Запустить Structurizr для живого просмотра DSL"
+    desc: "Launch Structurizr DSL dir in browser"
     requires:
       vars:
         [WORKSPACE_DIR, LOCAL_PORT]

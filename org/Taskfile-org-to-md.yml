@@ -3,6 +3,7 @@ version: '3'
 tasks:
 # =====================
   process-file:
+    desc: "Process Org -> MD in pandoc"
     requires:
       vars: [SOURCE_FILE, DEST_FILE]
     cmds:
@@ -16,6 +17,7 @@ tasks:
       - echo "-------------------"
      
   post-process-file:
+    desc: "Post-process MD cleaning after pandoc"
     internal: true
     requires:
       vars: [DEST_FILE]
@@ -26,6 +28,7 @@ tasks:
 
   # Реализация для Linux (в Докере)
   post-process-file-linux:
+    desc: "Post-process MD cleaning after pandoc for Linux"
     internal: true
     requires:
       vars: [DEST_FILE]
@@ -49,6 +52,7 @@ tasks:
 
   # Реализация для Windows (заглушка)
   post-process-file-windows:
+    desc: "Post-process MD cleaning after pandoc for Windows"    
     internal: true
     requires:
       vars: [DEST_FILE]
@@ -56,7 +60,8 @@ tasks:
       - echo "Локальная очистка на Windows не поддерживается. Используйте Docker."
 
 # =====================
-  render-dir-file:
+  render-tree-file:
+    desc: "Process Org file -> MD file in tree"
     internal: true
     requires:
       vars: [SOURCE_FILE, SOURCE_ROOT, DEST_DIR]
@@ -79,8 +84,8 @@ tasks:
           DEST_FILE: '{{.DEST_FILE}}'
 
 # =====================
-  render-dir:
-    desc: "Рендер с сохранением структуры: task render-dir SOURCE_DIR=./docs DEST_DIR=./docs-result" 
+  render-tree:
+    desc: "Process Org file tree -> MD file tree"
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
     vars:
@@ -98,7 +103,7 @@ tasks:
       - echo "Source Root - {{.SOURCE_DIR}}"
       - echo "Dest Root - {{.DEST_DIR}}"
       - for: sources
-        task: render-dir-file
+        task: render-tree-file
         vars:
           SOURCE_FILE: '{{.ITEM}}'
           SOURCE_ROOT: '{{.SOURCE_DIR}}'
