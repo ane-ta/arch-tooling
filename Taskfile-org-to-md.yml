@@ -1,9 +1,5 @@
 version: '3'
 
-vars:
-  SOURCE_DIR: '{{.SOURCE_DIR | default "../docs"}}'
-  DEST_DIR: '{{.DEST_DIR | default "../docs-result"}}'
-
 tasks:
 # =====================
   process-file:
