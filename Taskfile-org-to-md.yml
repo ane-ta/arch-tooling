@@ -1,0 +1,112 @@
+version: '3'
+
+vars:
+  SOURCE_DIR: '{{.SOURCE_DIR | default "../docs"}}'
+  DEST_DIR: '{{.DEST_DIR | default "../docs-result"}}'
+
+tasks:
+# =====================
+  transform-org-to-md:
+    requires:
+      vars: [SOURCE_FILE, DEST_FILE]
+    cmds:
+      - echo "Start processing org file..."
+      - echo "from -> {{.SOURCE_FILE}}"
+      - echo "to   -> {{.DEST_FILE}}"
+      - pandoc "{{.SOURCE_FILE}}" -f org -t gfm+raw_html -o "{{.DEST_FILE}}" --wrap=none
+      - task: post-process
+        vars:
+          DEST_FILE: '{{.DEST_FILE}}'
+      - echo "-------------------"
+     
+  post-process:
+    internal: true
+    requires:
+      vars: [DEST_FILE]
+    cmds:
+      - task: post-process-{{OS}}
+        vars: 
+          DEST_FILE: '{{.DEST_FILE}}'
+
+  # Реализация для Linux (в Докере)
+  post-process-linux:
+    internal: true
+    requires:
+      vars: [DEST_FILE]
+    cmds:
+      - sed -i -E 's|\\<br/?\\>|<br>|g' "{{.DEST_FILE}}"   # \<br\> -> <br>
+      - sed -i -E 's|\\\*|\*|g' "{{.DEST_FILE}}"           # \* -> *
+    # -i: Изменяет файл на месте (in-place).
+    # -E: Включает расширенные регулярные выражения.
+
+    # s: заменить
+    # /: будет символом разделителя в шаблоне
+    # \\ \
+    # () группа 1
+    # <br текст
+    # \/? возможный слэш
+    # > текст
+    # / разделитель.
+    # \1 заменить на группу 1
+    # / разделитель.
+    # g: global — заменить все вхождения в строке, а не только первое.
+
+  # Реализация для Windows (заглушка)
+  post-process-windows:
+    internal: true
+    requires:
+      vars: [DEST_FILE]
+    cmds:
+      - echo "Локальная очистка на Windows не поддерживается. Используйте Docker."
+
+# =====================
+  render-file:
+    internal: true
+    requires:
+      vars: [SOURCE_FILE, SOURCE_ROOT, DEST_DIR]
+    vars:
+      # Получаем относительный хвост
+      REL_SOURCE_FILE: '{{relPath .SOURCE_ROOT .SOURCE_FILE}}'
+      # Меняем расширение
+      REL_DEST_FILE: '{{replace ".org" ".md" .REL_SOURCE_FILE}}'
+      # Путь к итоговому файлу
+      DEST_FILE: '{{joinPath .DEST_DIR .REL_DEST_FILE}}'
+      # # Путь к папке итогового файла
+      # FINAL_DIR: '{{dir .DEST_PATH}}'
+
+    cmds:
+      # Теперь mkdir -p создаст всё дерево папок внутри docs-result
+      # - mkdir -p "{{.FINAL_DIR}}"
+      - task: transform-org-to-md
+        vars:
+          SOURCE_FILE: '{{.SOURCE_FILE}}'
+          DEST_FILE: '{{.DEST_FILE}}'
+
+# =====================
+  render-dir:
+    desc: "Рендер с сохранением структуры: task render-dir SOURCE_DIR=./docs DEST_DIR=./docs-result" 
+    requires:
+      vars: [SOURCE_DIR, DEST_DIR]
+    vars:
+      SOURCE_DIR: '{{.SOURCE_DIR | fromSlash}}'
+      DEST_DIR: '{{.DEST_DIR | fromSlash}}'
+    sources:
+      - '{{joinPath .SOURCE_DIR "**/*.org"}}'
+      - '{{joinPath .SOURCE_DIR "*.org"}}'
+    generates:
+      - '{{joinPath .DEST_DIR "**/*.md"}}'
+
+    cmds:
+      - echo "==================="
+      - echo "Starting rendering org to md"
+      - echo "Source Root - {{.SOURCE_DIR}}"
+      - echo "Dest Root - {{.DEST_DIR}}"
+      - for: sources
+        task: render-file
+        vars:
+          SOURCE_FILE: '{{.ITEM}}'
+          SOURCE_ROOT: '{{.SOURCE_DIR}}'
+          DEST_DIR: '{{.DEST_DIR}}'
+      - echo "Finished rendering org to md"
+      - echo "==================="
+

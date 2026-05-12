@@ -2,6 +2,7 @@ version: '3'
 
 vars:
   DOCKER_PANDOC_IMAGE_NAME: 'my-pandoc-task'
+  RENDER_DIR_TASK: 'org-to-md:render-dir'
 
 tasks:
 # =====================
@@ -30,7 +31,7 @@ tasks:
         -v "{{.DEST_DIR}}:/work/data-result" 
         -w /work
         {{.DOCKER_PANDOC_IMAGE_NAME}} 
-        render-dir 
+        {{.RENDER_DIR_TASK}} 
         SOURCE_DIR="data-source"
         DEST_DIR="data-result"
         {{if .SILENT}}--silent{{end}}
