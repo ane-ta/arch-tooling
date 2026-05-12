@@ -33,6 +33,8 @@ tasks:
       vars: [DEST_FILE]
     cmds:
       - task: post-process-{{OS}}
+        vars: 
+          DEST_FILE: '{{.DEST_FILE}}'
 
   # Реализация для Linux (в Докере)
   post-process-linux:

@@ -16,7 +16,7 @@ tasks:
   run:
     desc: "Запустить рендер внутри докера"
     requires:
-      vars: [TASKFILE_DIR, SOURCE_PATH, DEST_PATH]
+      vars: [SOURCE_DIR, DEST_DIR]
     vars:
       SILENT: '{{.SILENT | default false}}'
       FORCE: '{{.FORCE | default false}}'
@@ -25,9 +25,9 @@ tasks:
       # Мы монтируем текущую папку и вызываем таску 'render-dir' внутри контейнера
       - >
         docker run --rm 
-        -v "{{.TASKFILE_DIR}}:/work"
-        -v "{{.SOURCE_PATH}}:/work/data-source" 
-        -v "{{.DEST_PATH}}:/work/data-result" 
+        -v "{{.USER_WORKING_DIR}}:/work"
+        -v "{{.SOURCE_DIR}}:/work/data-source" 
+        -v "{{.DEST_DIR}}:/work/data-result" 
         -w /work
         {{.DOCKER_PANDOC_IMAGE_NAME}} 
         render-dir 
