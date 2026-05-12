@@ -4,6 +4,9 @@ includes:
   docker: 
     taskfile: ./Taskfile-docker.yml
     # Мы пробрасываем переменные внутрь, чтобы Docker.yml их видел
+  dsl: 
+    taskfile: ./Taskfile-dsl.yml
+    # Мы пробрасываем переменные внутрь, чтобы Docker.yml их видел
       
 vars:
   SOURCE_DIR: '{{.SOURCE_DIR | default "../docs"}}'
@@ -26,34 +29,39 @@ tasks:
      
   post-process:
     internal: true
+    requires:
+      vars: [DEST_FILE]
     cmds:
       - task: post-process-{{OS}}
-        vars: 
-          DEST_FILE: '{{.DEST_FILE}}'
 
   # Реализация для Linux (в Докере)
   post-process-linux:
     internal: true
+    requires:
+      vars: [DEST_FILE]
     cmds:
       - sed -i -E 's|\\<br/?\\>|<br>|g' "{{.DEST_FILE}}"   # \<br\> -> <br>
       - sed -i -E 's|\\\*|\*|g' "{{.DEST_FILE}}"           # \* -> *
     # -i: Изменяет файл на месте (in-place).
     # -E: Включает расширенные регулярные выражения.
 
-    # s/: заменить
+    # s: заменить
+    # /: будет символом разделителя в шаблоне
     # \\ \
     # () группа 1
     # <br текст
     # \/? возможный слэш
     # > текст
-    # / разделитель, закончили шаблон.
+    # / разделитель.
     # \1 заменить на группу 1
-    # / разделитель, закончили шаблон.
+    # / разделитель.
     # g: global — заменить все вхождения в строке, а не только первое.
 
   # Реализация для Windows (заглушка)
   post-process-windows:
     internal: true
+    requires:
+      vars: [DEST_FILE]
     cmds:
       - echo "Локальная очистка на Windows не поддерживается. Используйте Docker."
 

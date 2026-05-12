@@ -1,0 +1,69 @@
+version: '3'
+
+tasks:
+
+# =====================
+  dsl-to-puml:
+    desc: "Export Structurizr DSL to PlantUML (C4)"
+    requires:
+      vars:
+        [WORKSPACE_PATH, DEST_PATH]
+    vars:
+      WORKSPACE_DIR: '{{dir .WORKSPACE_PATH}}'
+      WORKSPACE_FILENAME: '{{base .WORKSPACE_PATH}}'
+    cmds:
+      - >
+        docker run --rm 
+        -v "{{.WORKSPACE_DIR}}:/usr/local/structurizr" 
+        -v "{{.DEST_PATH}}:/usr/local/structurizr/result"
+        structurizr/structurizr export 
+        -workspace /usr/local/structurizr/{{.WORKSPACE_FILENAME}}
+        -format plantuml/c4plantuml 
+        -output /usr/local/structurizr/result/
+
+# =====================
+  puml-to-svg:
+    desc: "Render PlantUML diagrams to SVG"
+    requires:
+      vars:
+        [PUML_SOURCE_DIR, SVG_DEST_DIR]
+    cmds:
+      - >
+        docker run --rm 
+        -v "{{.PUML_SOURCE_DIR}}:/data" 
+        -v "{{.SVG_DEST_DIR}}:/images" 
+        plantuml/plantuml 
+        -tsvg 
+        /data/*.puml 
+        -o /images/
+  
+# =====================
+  export:
+    desc: "Full architecture update: DSL -> PUML -> SVG"
+    requires:
+      vars: [WORKSPACE_PATH, PUML_DIR, SVG_DIR]
+    cmds:
+      - task: dsl-to-puml
+        vars:
+          WORKSPACE_PATH: '{{.WORKSPACE_PATH}}'
+          DEST_PATH: '{{.PUML_DIR}}'
+
+      - task: puml-to-svg
+        vars:
+          PUML_SOURCE_DIR: '{{.PUML_DIR}}'
+          SVG_DEST_DIR: '{{.SVG_DIR}}'
+
+
+# =====================
+  launch:
+    desc: "Запустить Structurizr для живого просмотра DSL"
+    requires:
+      vars:
+        [WORKSPACE_DIR, LOCAL_PORT]
+    cmds:
+      - echo "Structurizr Local запускается на http://localhost:{{.LOCAL_PORT}}"
+      - >
+        docker run --rm -it
+        -p {{.LOCAL_PORT}}:8080
+        -v "{{.WORKSPACE_DIR}}:/usr/local/structurizr"
+        structurizr/structurizr local
