@@ -41,7 +41,7 @@ tasks:
   
 # =====================
   export:
-    desc: "Structurizr DSL workspace -> PUML dir -> SVG dir"
+    desc: "Export Structurizr DSL workspace -> PUML dir -> SVG dir"
     requires:
       vars: [WORKSPACE_PATH, PUML_DIR, SVG_DIR]
     cmds:

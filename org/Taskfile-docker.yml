@@ -11,7 +11,7 @@ tasks:
     requires:
       vars: [DOCKER_PANDOC_IMAGE_NAME]
     cmds:
-      - docker build -t {{.DOCKER_PANDOC_IMAGE_NAME}} .
+      - docker build -t {{.DOCKER_PANDOC_IMAGE_NAME}} {{.TASKFILE_DIR}}
 
 # =====================
   run:

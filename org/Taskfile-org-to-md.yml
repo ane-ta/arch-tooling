@@ -4,6 +4,7 @@ tasks:
 # =====================
   process-file:
     desc: "Process Org -> MD in pandoc"
+    internal: true
     requires:
       vars: [SOURCE_FILE, DEST_FILE]
     cmds:
@@ -86,6 +87,7 @@ tasks:
 # =====================
   render-tree:
     desc: "Process Org file tree -> MD file tree"
+    internal: true
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
     vars:
