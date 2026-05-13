@@ -2,6 +2,9 @@ version: '3'
 
 includes:
   # works correctly only with 1 level of including
+  git:
+    taskfile: ./git/Taskfile-git.yml
+
   org-to-md:docker: 
     taskfile: ./org/Taskfile-docker.yml
 
