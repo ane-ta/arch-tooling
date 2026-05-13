@@ -1,0 +1,40 @@
+version: '3'
+
+vars:
+  DOCKER_PANDOC_IMAGE_NAME: 'my-pandoc-task'
+  RENDER_DIR_TASK: 'org-to-md:render-tree'
+
+tasks:
+# =====================
+  build:
+    desc: "Prepare docker image to render Org -> MD"
+    requires:
+      vars: [DOCKER_PANDOC_IMAGE_NAME]
+    cmds:
+      - docker build -t {{.DOCKER_PANDOC_IMAGE_NAME}} {{.TASKFILE_DIR}}
+
+# =====================
+  run:
+    desc: "Render Org tree -> MD tree in Docker"
+    requires:
+      vars: [SOURCE_DIR, DEST_DIR]
+    vars:
+    preconditions:
+      # Проверяем папку. Мы склеиваем корень запуска и переданный путь.
+      - sh: test -d "{{.SOURCE_DIR}}"
+        msg: "Ошибка: Директория не найдена по пути: {{.SOURCE_DIR}}"
+                
+    cmds:
+      # Мы монтируем текущую папку и вызываем таску 'render-dir' внутри контейнера
+      - >
+        docker run --rm 
+        -v "{{.USER_WORKING_DIR}}:/work"
+        -v "{{.SOURCE_DIR}}:/work/data-source" 
+        -v "{{.DEST_DIR}}:/work/data-result" 
+        -w /work
+        {{.DOCKER_PANDOC_IMAGE_NAME}} 
+        {{.RENDER_DIR_TASK}} 
+        SOURCE_DIR="data-source"
+        DEST_DIR="data-result"
+        {{if .CLI_SILENT}}--silent{{end}}
+        {{if .CLI_FORCE}}--force{{end}}
