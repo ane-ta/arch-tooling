@@ -48,7 +48,7 @@ tasks:
       - task: dsl-to-puml
         vars:
           WORKSPACE_PATH: '{{.WORKSPACE_PATH}}'
-          DEST_PATH: '{{.PUML_DIR}}'
+          DEST_DIR: '{{.PUML_DIR}}'
 
       - task: puml-to-svg
         vars:
