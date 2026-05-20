@@ -6,12 +6,18 @@ includes:
   
   testing:
     taskfile: ../tests.yml
+    vars:
+      TASK_FLAGS: '--taskfile Taskfile-path-checks-tests.yml'
 
 tasks:
 #=================================
-  path:check_is_abs:
+  check_is_abs:
     desc: 'Testing path:is_abs'
     cmds:
+      - task: testing:echo-tests-started
+        vars: 
+          LOG_CAPTION: "path:is_abs"
+
       - task: testing:assert_fail
         vars:
           LOG_CAPTION: '.'
@@ -27,10 +33,14 @@ tasks:
           LOG_CAPTION: 'asd'
           CLI_TASK_CMD: 'path:is_abs CHECK_PATH="asd"'
       
-      - task: path:check_is_abs_notwin
-      - task: path:check_is_abs_win
+      - task: check_is_abs_notwin
+      - task: check_is_abs_win
 
-  path:check_is_abs_notwin:
+      - task: testing:echo-tests-passed
+        vars: 
+          LOG_CAPTION: "path:is_abs"
+
+  check_is_abs_notwin:
     platforms: [linux]
     internal: true
     cmds:
@@ -39,7 +49,7 @@ tasks:
           LOG_CAPTION: '/asd'
           CLI_TASK_CMD: 'path:is_abs CHECK_PATH="/asd"'
 
-  path:check_is_abs_win:
+  check_is_abs_win:
     platforms: [windows]
     internal: true
     cmds:
@@ -59,9 +69,13 @@ tasks:
           CLI_TASK_CMD: 'path:is_abs CHECK_PATH="/asd"'
 
 #=================================
-  path:check_is_rel:
+  check_is_rel:
     desc: 'Testing path:is_rel'
     cmds:
+      - task: testing:echo-tests-started
+        vars: 
+          LOG_CAPTION: "path:is_rel"
+
       - task: testing:assert_no_fail
         vars:
           LOG_CAPTION: '.'
@@ -77,10 +91,14 @@ tasks:
           LOG_CAPTION: 'asd'
           CLI_TASK_CMD: 'path:is_rel CHECK_PATH="asd"'
       
-      - task: path:check_is_rel_fails_notwin
-      - task: path:check_is_rel_fails_win
+      - task: check_is_rel_fails_notwin
+      - task: check_is_rel_fails_win
 
-  path:check_is_rel_fails_notwin:
+      - task: testing:echo-tests-passed
+        vars: 
+          LOG_CAPTION: "path:is_rel"
+
+  check_is_rel_fails_notwin:
     platforms: [linux]
     internal: true
     cmds:
@@ -89,7 +107,7 @@ tasks:
           LOG_CAPTION: '/asd'
           CLI_TASK_CMD: 'path:is_rel CHECK_PATH="/asd"'
 
-  path:check_is_rel_fails_win:
+  check_is_rel_fails_win:
     platforms: [windows]
     internal: true
     cmds:
