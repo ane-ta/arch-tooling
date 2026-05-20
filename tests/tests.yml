@@ -1,0 +1,88 @@
+version: '3'
+
+env:
+  TASK_FLAGS: 
+
+tasks:
+  echo-caption:
+    internal: true
+    desc: "Логировать конец предыдущего шага и начало следующего"
+    requires:
+      vars:
+        [LOG_CAPTION]
+    cmds:
+      - echo ""
+      - |
+        {{if not (empty .LOG_CAPTION)}}
+          echo ---------------------------------------------------------------------------
+          echo "{{.LOG_CAPTION}}"
+          echo ---------------------------------------------------------------------------
+        {{end}}      
+
+  run-tests:
+    internal: true
+    requires:
+      vars:
+        [TESTS] # TESTS.CAPTION TESTS.TASK
+   
+    cmds:
+      - for: { var: TESTS}
+        task: run-test
+        vars:
+          CAPTION: "{{.ITEM.CAPTION}}"
+          TASK: "{{.ITEM.TASK}}"
+      
+  run-test:
+    internal: true
+    requires:
+      vars:
+        [CAPTION, TASK]
+    cmds:
+      - task: echo-caption
+        vars:
+          LOG_CAPTION: '{{.CAPTION}}'
+
+      - task: '{{.TASK}}'
+  
+  assert_fail:
+    internal: true
+    requires:
+      vars:
+        [LOG_CAPTION, CLI_TASK_CMD]
+    cmds:
+      - task: echo-caption
+        vars:
+          LOG_CAPTION: "Must fail - {{.LOG_CAPTION}}"
+      - |
+        STATUS=0
+        eval "task {{.TASK_FLAGS}} {{.CLI_TASK_CMD}}" || STATUS=$?
+
+        if [ $STATUS -ne 0 ]; then
+          echo "-> OK"
+          exit 0
+        else
+          echo "-> ERROR: task didn't fail"
+          exit 1 >&2
+        fi
+
+  assert_no_fail:
+    internal: true
+    requires:
+      vars:
+        [LOG_CAPTION, CLI_TASK_CMD]
+    cmds:
+      - task: echo-caption
+        vars:
+          LOG_CAPTION: "Must pass - {{.LOG_CAPTION}}"
+      - echo "Running at {{.TASK_DIR}} cmd 'task {{.TASK_FLAGS}} {{.CLI_TASK_CMD}}'"
+      - |
+        STATUS=0
+        eval "task {{.TASK_FLAGS}} {{.CLI_TASK_CMD}}" || STATUS=$? 
+
+        if [ $STATUS -ne 0 ]; then
+          echo "-> ERROR: Task failed with code $STATUS"
+          exit 1 >&2
+        else
+          echo "-> OK"
+          exit 0
+        fi      
