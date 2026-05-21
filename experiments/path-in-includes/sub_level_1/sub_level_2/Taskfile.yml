@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  debug:
+    cmds:
+    
+      - echo "ROOT_DIR          = {{.ROOT_DIR}}"
+      - echo ""
+      - echo "From ROOT_DIR:"
+      - echo "TASKFILE_DIR      = {{.TASKFILE_DIR | replace .ROOT_DIR "."}}"
+      - echo "TASK_DIR          = {{.TASK_DIR | replace .ROOT_DIR "."}}"
+      - echo "USER_WORKING_DIR  = {{.USER_WORKING_DIR | replace .ROOT_DIR "."}}"
+      # Проверяем, куда смотрит встроенный Shell операционки через pwd/cd
+      - |
+        # {{if eq OS "windows"}}
+        echo SHELL CUR DIR      = $PWD
+        # {{else}}
+        # echo "SHELL CUR DIR     = $(pwd)"
+        # {{end}}
+
