@@ -1,7 +1,7 @@
 version: '3'
 
 env:
-  TASK_FLAGS: 
+  CLI_TASK_FLAGS: 
 
 tasks:
   echo-caption:
@@ -84,7 +84,7 @@ tasks:
           LOG_CAPTION: "Must fail - {{.LOG_CAPTION}}"
       - |
         STATUS=0
-        eval "task {{.TASK_FLAGS}} {{.CLI_TASK_CMD}}" || STATUS=$?
+        eval "task {{.CLI_TASK_CMD}} {{.CLI_TASK_FLAGS}} {{if .CLI_SILENT}}--silent{{end}} {{if .CLI_FORCE}}--force{{end}}" || STATUS=$?
 
         if [ $STATUS -ne 0 ]; then
           echo "-> OK"
@@ -99,14 +99,22 @@ tasks:
     requires:
       vars:
         [LOG_CAPTION, CLI_TASK_CMD]
+    vars:
+      CLI_TASK: 'task {{.CLI_TASK_CMD}} {{.CLI_TASK_FLAGS}} {{if .CLI_SILENT}}--silent{{end}} {{if .CLI_FORCE}}--force{{end}}'
     cmds:
       - task: echo-caption
         vars:
           LOG_CAPTION: "Must pass - {{.LOG_CAPTION}}"
-      - echo "Running at {{.TASK_DIR}} cmd 'task {{.TASK_FLAGS}} {{.CLI_TASK_CMD}}'"
+      - |
+        cat << EOF
+        Running sh...
+        - at {{.TASK_DIR}}
+        - cmd '{{.CLI_TASK}}'
+        EOF
+        #
       - |
         STATUS=0
-        eval "task {{.TASK_FLAGS}} {{.CLI_TASK_CMD}}" || STATUS=$? 
+        eval "{{.CLI_TASK}}" || STATUS=$? 
 
         if [ $STATUS -ne 0 ]; then
           echo "-> ERROR: Task failed with code $STATUS"

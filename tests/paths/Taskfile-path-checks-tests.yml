@@ -7,7 +7,7 @@ includes:
   testing:
     taskfile: ../tests.yml
     vars:
-      TASK_FLAGS: '--taskfile Taskfile-path-checks-tests.yml'
+      CLI_TASK_FLAGS: '--taskfile Taskfile-path-checks-tests.yml'
 
 tasks:
 #=================================
