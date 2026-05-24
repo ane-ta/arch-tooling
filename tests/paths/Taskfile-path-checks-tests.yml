@@ -2,10 +2,11 @@ version: '3'
 
 includes:
   path: 
-    taskfile: ../../paths/path-checks.yml
+    taskfile: ../../scripts/paths/path-checks.yml
   
   testing:
-    taskfile: ../tests.yml
+    taskfile: ../testing/testing.yml
+    internal: true
     vars:
       CLI_TASK_FLAGS: '--taskfile Taskfile-path-checks-tests.yml'
 
@@ -61,7 +62,7 @@ tasks:
       - task: testing:assert_no_fail
         vars:
           LOG_CAPTION: 'd:\\'
-          CLI_TASK_CMD: 'path:is_abs CHECK_PATH="d:\\"'
+          CLI_TASK_CMD: 'path:is_abs CHECK_PATH=d:\\ '
 
       - task: testing:assert_fail
         vars:
@@ -119,7 +120,7 @@ tasks:
       - task: testing:assert_fail
         vars:
           LOG_CAPTION: 'd:\\'
-          CLI_TASK_CMD: 'path:is_rel CHECK_PATH="d:\\"'
+          CLI_TASK_CMD: 'path:is_rel CHECK_PATH=d:\\ '
 
       - task: testing:assert_no_fail
         vars:

@@ -3,9 +3,6 @@ version: '3'
 includes:
   path-tests: 
     taskfile: Taskfile-path-checks-tests.yml
-  
-  testing:
-    taskfile: ../tests.yml
 
 tasks:
   testing:paths:

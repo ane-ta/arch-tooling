@@ -73,19 +73,33 @@ tasks:
 
       - task: '{{.TASK}}'
   
-  assert_fail:
+  assert_that:
     internal: true
     requires:
       vars:
-        [LOG_CAPTION, CLI_TASK_CMD]
+        [LOG_CAPTION, CLI_TASK_CMD, MUST_FAIL]
+    vars:
+      CLI_TASK: 'task {{.CLI_TASK_CMD}} {{.CLI_TASK_FLAGS}} {{if .CLI_SILENT}}--silent{{end}} {{if .CLI_FORCE}}--force{{end}}'
+      MUST_FAIL: "{{.MUST_FAIL}}"
     cmds:
       - task: echo-caption
         vars:
-          LOG_CAPTION: "Must fail - {{.LOG_CAPTION}}"
+          LOG_CAPTION: '{{if eq .MUST_FAIL "true"}}Must fail{{else}}Must pass{{end}} - {{.LOG_CAPTION}}'
+
+      - |
+        cat << EOF
+        Running sh..
+        - at  '{{.TASK_DIR}}'
+        - cmd '{{.CLI_TASK}}'
+        EOF
+        #
+
       - |
         STATUS=0
-        eval "task {{.CLI_TASK_CMD}} {{.CLI_TASK_FLAGS}} {{if .CLI_SILENT}}--silent{{end}} {{if .CLI_FORCE}}--force{{end}}" || STATUS=$?
+        eval "{{.CLI_TASK}}" || STATUS=$?
+        echo "RESULT STATUS: $STATUS"
 
+        {{if eq .MUST_FAIL "true"}}
         if [ $STATUS -ne 0 ]; then
           echo "-> OK"
           exit 0
@@ -93,33 +107,36 @@ tasks:
           echo "-> ERROR: task didn't fail"
           exit 1 >&2
         fi
-
-  assert_no_fail:
-    internal: true
-    requires:
-      vars:
-        [LOG_CAPTION, CLI_TASK_CMD]
-    vars:
-      CLI_TASK: 'task {{.CLI_TASK_CMD}} {{.CLI_TASK_FLAGS}} {{if .CLI_SILENT}}--silent{{end}} {{if .CLI_FORCE}}--force{{end}}'
-    cmds:
-      - task: echo-caption
-        vars:
-          LOG_CAPTION: "Must pass - {{.LOG_CAPTION}}"
-      - |
-        cat << EOF
-        Running sh...
-        - at {{.TASK_DIR}}
-        - cmd '{{.CLI_TASK}}'
-        EOF
-        #
-      - |
-        STATUS=0
-        eval "{{.CLI_TASK}}" || STATUS=$? 
-
+        {{else}}
         if [ $STATUS -ne 0 ]; then
           echo "-> ERROR: Task failed with code $STATUS"
           exit 1 >&2
         else
           echo "-> OK"
           exit 0
-        fi      
+        fi
+        {{end}}
+
+  assert_no_fail:
+    internal: true
+    requires:
+      vars:
+        [LOG_CAPTION, CLI_TASK_CMD]
+    cmds:
+      - task: assert_that
+        vars:
+          LOG_CAPTION: "{{.LOG_CAPTION}}"
+          CLI_TASK_CMD: "{{.CLI_TASK_CMD}}"
+          MUST_FAIL: false
+
+  assert_fail:
+    internal: true
+    requires:
+      vars:
+        [LOG_CAPTION, CLI_TASK_CMD]
+    cmds:
+      - task: assert_that
+        vars:
+          LOG_CAPTION: "{{.LOG_CAPTION}}"
+          CLI_TASK_CMD: "{{.CLI_TASK_CMD}}"
+          MUST_FAIL: true
