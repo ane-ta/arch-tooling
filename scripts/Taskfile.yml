@@ -5,11 +5,8 @@ includes:
   git:
     taskfile: ./git/Taskfile-git.yml
 
-  org-to-md:docker: 
-    taskfile: ./org/Taskfile-docker.yml
-
   org-to-md: 
-    taskfile: ./org/Taskfile-org-to-md.yml
+    taskfile: ./org/Taskfile.yml
 
   dsl: 
     taskfile: ./dsl/Taskfile-dsl.yml

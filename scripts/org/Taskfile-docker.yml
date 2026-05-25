@@ -27,28 +27,32 @@ tasks:
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
     vars:
-      RENDER_DIR_TASK: {{.RENDER_DIR_TASK | default "org-to-md:render_tree"}}
+      RENDER_DIR_TASK: '{{.RENDER_DIR_TASK | default "org-to-md:render_tree"}}'
     preconditions:
-      # Проверяем папку. Мы склеиваем корень запуска и переданный путь.
       - sh: test -d "{{.SOURCE_DIR}}"
         msg: "Ошибка: Директория не найдена по пути: {{.SOURCE_DIR}}"
-                
     cmds:
-      # Мы монтируем текущую папку и вызываем таску 'render-dir' внутри контейнера
+      - |
+        cat << EOF
+
+        ----------------------------------------------------------------------------------
+        -> Starting rendering org to md in Docker
+        -> Source Root  - {{.SOURCE_DIR}}
+        -> Dest Root    - {{.DEST_DIR}}
+        -> Task         - {{.RENDER_DIR_TASK}}
+        ==================================================================================
+        EOF
+        # 
+
       - >
         docker run --rm 
         -v "{{.ROOT_DIR}}:/work/script"
         -v "{{.SOURCE_DIR}}:/work/data_source" 
         -v "{{.DEST_DIR}}:/work/data_result"
-
         -w /work/script
-
         {{.DOCKER_PANDOC_IMAGE_NAME}} 
-
         {{.RENDER_DIR_TASK}} 
-
         SOURCE_DIR="/work/data_source"
         DEST_DIR="/work/data_result"
-
         {{if .CLI_SILENT}}--silent{{end}}
         {{if .CLI_FORCE}}--force{{end}}

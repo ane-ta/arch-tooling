@@ -108,11 +108,18 @@ tasks:
       - '{{joinPath .DEST_DIR "**/*.md"}}'
 
     cmds:
-      - echo "==================="
-      - echo "Starting rendering org to md"
-      - echo "Source Root - {{.SOURCE_DIR}}"
-      - echo "Dest Root - {{.DEST_DIR}}"
-      - echo "Found..."
+      - |
+        cat << EOF
+
+        ----------------------------------------------------------------------------------
+        -> Starting rendering org to md
+        -> Source Root  - {{.SOURCE_DIR}}
+        -> Dest Root    - {{.DEST_DIR}}
+        ==================================================================================
+        EOF
+        #
+
+      - echo "Found files.."
       - for: sources
         cmd: echo "{{.ITEM}}"
       - for: sources
@@ -121,6 +128,5 @@ tasks:
           SOURCE_FILE: '{{joinPath .TASK_DIR .ITEM}}'
           SOURCE_ROOT: '{{.SOURCE_DIR}}'
           DEST_DIR: '{{.DEST_DIR}}'
-      - echo "Finished rendering org to md"
-      - echo "==================="
+
 
