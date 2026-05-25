@@ -1,0 +1,48 @@
+version: '3'
+
+includes:
+
+  testing:
+    taskfile: ../testing/testing.yml
+    internal: true
+
+vars:
+  TASK_FILEPATH: '{{joinPath .TASKFILE_DIR "../../scripts/Taskfile.yml" | toSlash}}'
+  CLI_TASK_FLAG: ' --taskfile "{{.TASK_FILEPATH}}" '
+
+tasks:
+  
+  run_tests:
+    desc: "Run tests"
+    cmds:
+      - task: testing:echo-tests-started 
+        vars:
+          LOG_CAPTION: "org-to-md:docker"
+
+      - task: check_docker_build
+      - task: check_docker_render_tree
+
+      - task: testing:echo-tests-passed 
+        vars:
+          LOG_CAPTION: "org-to-md:docker"
+
+  check_docker_build:
+  cmds:
+    - task: testing:assert_no_fail
+      vars:
+        LOG_CAPTION: "org-to-md:docker:build"
+        CLI_TASK_CMD: 'org-to-md:docker:build {{.CLI_TASK_FLAG}}' 
+
+  check_docker_render_tree:
+    vars:
+      # SOURCE_ABS_DIR: '{{joinPath .ROOT_DIR "/../../../GoFuture/Task1/docs" | toSlash}}'
+      # DEST_ABS_DIR: '{{joinPath .ROOT_DIR "/../../../GoFuture/Task1/results"| toSlash}}'
+      SOURCE_ABS_DIR: '{{joinPath .TASKFILE_DIR "." | toSlash}}'
+      DEST_ABS_DIR: '{{joinPath .TASKFILE_DIR "results"| toSlash}}'
+
+    cmds:
+      - task: testing:assert_no_fail
+        vars:
+          LOG_CAPTION: "org-to-md:docker:render_tree"
+          CLI_TASK_CMD: 'org-to-md:docker:render_tree SOURCE_DIR="{{.SOURCE_ABS_DIR}}" DEST_DIR="{{.DEST_ABS_DIR}}" {{.CLI_TASK_FLAG}}'
+

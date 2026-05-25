@@ -1,0 +1,58 @@
+version: '3'
+
+vars:
+  DOCKER_PANDOC_IMAGE_NAME: 'my-pandoc-task'
+
+tasks:
+# =====================
+  build:
+    desc: "Prepare docker image to render Org -> MD"
+    requires:
+      vars: [DOCKER_PANDOC_IMAGE_NAME]
+    
+    sources:
+      - '{{joinPath .TASKFILE_DIR "Dockerfile"}}'
+    generates:
+      - '{{joinPath .TASKFILE_DIR ".docker_build_marker"}}'      
+    status:
+      - docker image inspect {{.DOCKER_PANDOC_IMAGE_NAME}} >/dev/null 2>&1
+    
+    cmds:
+      - docker build -t {{.DOCKER_PANDOC_IMAGE_NAME}} {{.TASKFILE_DIR}}
+      - touch '{{.TASKFILE_DIR}}/.docker_build_marker'
+
+# =====================
+  render_tree:
+    desc: "Render Org tree -> MD tree in Docker"
+    requires:
+      vars: [SOURCE_DIR, DEST_DIR]
+    vars:
+      RENDER_DIR_TASK: '{{.RENDER_DIR_TASK | default "org-to-md:render_tree"}}'
+    preconditions:
+      - sh: test -d "{{.SOURCE_DIR}}"
+        msg: "Ошибка: Директория не найдена по пути: {{.SOURCE_DIR}}"
+    cmds:
+      - |
+        cat << EOF
+
+        ----------------------------------------------------------------------------------
+        -> Starting rendering org to md in Docker
+        -> Source Root  - {{.SOURCE_DIR}}
+        -> Dest Root    - {{.DEST_DIR}}
+        -> Task         - {{.RENDER_DIR_TASK}}
+        ==================================================================================
+        EOF
+        # 
+
+      - >
+        docker run --rm 
+        -v "{{.ROOT_DIR}}:/work/script"
+        -v "{{.SOURCE_DIR}}:/work/data_source" 
+        -v "{{.DEST_DIR}}:/work/data_result"
+        -w /work/script
+        {{.DOCKER_PANDOC_IMAGE_NAME}} 
+        {{.RENDER_DIR_TASK}} 
+        SOURCE_DIR="/work/data_source"
+        DEST_DIR="/work/data_result"
+        {{if .CLI_SILENT}}--silent{{end}}
+        {{if .CLI_FORCE}}--force{{end}}

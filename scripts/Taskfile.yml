@@ -1,0 +1,12 @@
+version: '3'
+
+includes:
+
+  git:
+    taskfile: ./git/Taskfile-git.yml
+
+  org-to-md: 
+    taskfile: ./org/Taskfile.yml
+
+  dsl: 
+    taskfile: ./dsl/Taskfile-dsl.yml

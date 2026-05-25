@@ -1,0 +1,12 @@
+version: '3'
+
+includes:
+  path-tests: 
+    taskfile: Taskfile-path-checks-tests.yml
+
+tasks:
+  testing:paths:
+    desc: testing path
+    cmds:
+      - task: path-tests:check_is_abs
+      - task: path-tests:check_is_rel

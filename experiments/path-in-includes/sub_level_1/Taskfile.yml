@@ -1,0 +1,20 @@
+version: '3'
+
+includes:
+  sub2:
+    taskfile: ./sub_level_2/Taskfile.yml
+
+  sub2-dir:
+    taskfile: ./sub_level_2/Taskfile.yml
+    dir: './fixed-dir-for-sub2'
+
+tasks:
+  print-sub2:
+    # internal: true
+    cmds:
+      - task: sub2:debug
+
+  print-sub2-dir:
+    # internal: true
+    cmds:
+      - task: sub2-dir:debug

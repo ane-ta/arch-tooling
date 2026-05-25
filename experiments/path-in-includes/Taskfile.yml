@@ -1,0 +1,93 @@
+version: '3'
+# shows how path system variables vary depending on include case.
+
+includes:
+
+  # Option 1: 2-level include
+  sub1: ./sub_level_1/Taskfile.yml
+
+  # Option 2: 2-level include with custom working dir
+  sub1-dir:
+    taskfile: ./sub_level_1/Taskfile.yml
+    dir: './fixed-dir-for-sub1'
+  
+  # Option 3: 1-level include
+  sub2:
+    taskfile: ./sub_level_1/sub_level_2/Taskfile.yml
+
+  # Option 4: 1-level include with custom working dir
+  sub2dir:
+    taskfile: ./sub_level_1/sub_level_2/Taskfile.yml
+    dir: './fixed-dir-for-sub2'
+
+  # misc
+  testing: 
+    taskfile: ../../tests/tests.yml
+    flatten: true
+    internal: true
+
+tasks:
+
+  what-shell:
+    cmds:
+      - echo "Имя процесса шелла:" && echo $0
+      - echo "Путь к бинарнику шелла:" && which sh || which bash || echo "Встроенный mvdan/sh"
+
+#=================================
+  run:
+    desc: 'Shows difference in path system variables depending on include case'
+    vars:
+      TESTS:
+        # running 2-level include task
+        - CAPTION: 'root / include1 / include2 / task'
+          TASK: sub1:sub2:debug
+
+        # running 2-level include task with custom dir at 1-level
+        - CAPTION: 'root / include1 + dir / include2 / task'
+          TASK: sub1-dir:sub2:debug
+
+        # running 2-level custom dir include task
+        - CAPTION: 'root / include1 / include2 + dir / task'
+          TASK: sub1:sub2-dir:debug
+          
+        # running 2-level custom dir include task with custom dir at 1-level  
+        - CAPTION: 'root / include1 + dir / include2 + dir / task'
+          TASK: sub1-dir:sub2-dir:debug
+
+        # running 1-level include task
+        - CAPTION: 'root / include1 / task'
+          TASK: sub2:debug
+
+        # running 1-level custom dir include task
+        - CAPTION: 'root / include1 + dir / task'
+          TASK: sub2dir:debug
+
+        # running from shell 1-level task with 2-level include 
+        - CAPTION: 'root / sh1 / include2 / task'
+          TASK: tests:sh1
+
+        # running  from shell 1-level task with 2-level custom dir include 
+        - CAPTION: 'root / sh1 / include2 + dir / task'
+          TASK: tests:sh1dir2
+
+    cmds:
+      - task: run-tests
+        vars:
+          TESTS:
+            ref: .TESTS
+    
+#=================================
+  tests:sh1:
+    # running from shell 1-level task with 2-level include 
+    desc: 'root / sh1 / sub_level_2 / task'
+    internal: true
+    cmds:
+      - task --taskfile ./sub_level_1/Taskfile.yml print-sub2 --silent
+      
+#=================================
+  tests:sh1dir2:
+    # running from shell 1-level task with 2-level custom dir include 
+    desc: 'root / sh1 /sub_level_2 + dir / task'
+    internal: true
+    cmds:
+      - task --taskfile ./sub_level_1/Taskfile.yml print-sub2-dir --silent
