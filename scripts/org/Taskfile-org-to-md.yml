@@ -2,33 +2,37 @@ version: '3'
 
 tasks:
 # =====================
-  process-file:
+  process_file:
     desc: "Process Org -> MD in pandoc"
     internal: true
     requires:
       vars: [SOURCE_FILE, DEST_FILE]
+    preconditions:
+      # Проверяем папку. Мы склеиваем корень запуска и переданный путь.
+      - sh: test -f "{{.SOURCE_FILE}}"
+        msg: "Ошибка: Файл не найден по пути: {{.SOURCE_FILE}}"
     cmds:
       - echo "Start processing org file..."
       - echo "from -> {{.SOURCE_FILE}}"
       - echo "to   -> {{.DEST_FILE}}"
       - pandoc "{{.SOURCE_FILE}}" -f org -t gfm+raw_html -o "{{.DEST_FILE}}" --wrap=none
-      - task: post-process-file
+      - task: post_process_file
         vars:
           DEST_FILE: '{{.DEST_FILE}}'
       - echo "-------------------"
      
-  post-process-file:
+  post_process_file:
     desc: "Post-process MD cleaning after pandoc"
     internal: true
     requires:
       vars: [DEST_FILE]
     cmds:
-      - task: post-process-file-{{OS}}
+      - task: post_process_file_{{OS}}
         vars: 
           DEST_FILE: '{{.DEST_FILE}}'
 
   # Реализация для Linux (в Докере)
-  post-process-file-linux:
+  post_process_file_linux:
     desc: "Post-process MD cleaning after pandoc for Linux"
     internal: true
     requires:
@@ -52,7 +56,7 @@ tasks:
     # g: global — заменить все вхождения в строке, а не только первое.
 
   # Реализация для Windows (заглушка)
-  post-process-file-windows:
+  post_process_file_windows:
     desc: "Post-process MD cleaning after pandoc for Windows"    
     internal: true
     requires:
@@ -61,7 +65,7 @@ tasks:
       - echo "Локальная очистка на Windows не поддерживается. Используйте Docker."
 
 # =====================
-  render-tree-file:
+  render_tree_file:
     desc: "Process Org file -> MD file in tree"
     internal: true
     requires:
@@ -73,23 +77,27 @@ tasks:
       REL_DEST_FILE: '{{replace ".org" ".md" .REL_SOURCE_FILE}}'
       # Путь к итоговому файлу
       DEST_FILE: '{{joinPath .DEST_DIR .REL_DEST_FILE}}'
-      # # Путь к папке итогового файла
-      # FINAL_DIR: '{{dir .DEST_PATH}}'
 
     cmds:
       # Теперь mkdir -p создаст всё дерево папок внутри docs-result
       # - mkdir -p "{{.FINAL_DIR}}"
-      - task: process-file
+      - task: process_file
         vars:
           SOURCE_FILE: '{{.SOURCE_FILE}}'
           DEST_FILE: '{{.DEST_FILE}}'
 
 # =====================
-  render-tree:
+  render_tree:
     desc: "Process Org file tree -> MD file tree"
-    internal: true
+    # internal: true
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
+    preconditions:
+      # Проверяем папку. Мы склеиваем корень запуска и переданный путь.
+      - sh: test -d "{{.SOURCE_DIR}}"
+        msg: "Ошибка: Директория не найдена по пути: {{.SOURCE_DIR}}"
+      - sh: test -d "{{.DEST_DIR}}"
+        msg: "Ошибка: Директория не найдена по пути: {{.DEST_DIR}}"
     vars:
       SOURCE_DIR: '{{.SOURCE_DIR}}'
       DEST_DIR: '{{.DEST_DIR}}'
@@ -104,10 +112,13 @@ tasks:
       - echo "Starting rendering org to md"
       - echo "Source Root - {{.SOURCE_DIR}}"
       - echo "Dest Root - {{.DEST_DIR}}"
+      - echo "Found..."
       - for: sources
-        task: render-tree-file
+        cmd: echo "{{.ITEM}}"
+      - for: sources
+        task: render_tree_file
         vars:
-          SOURCE_FILE: '{{.ITEM}}'
+          SOURCE_FILE: '{{joinPath .TASK_DIR .ITEM}}'
           SOURCE_ROOT: '{{.SOURCE_DIR}}'
           DEST_DIR: '{{.DEST_DIR}}'
       - echo "Finished rendering org to md"

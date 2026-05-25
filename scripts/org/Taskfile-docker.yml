@@ -2,7 +2,6 @@ version: '3'
 
 vars:
   DOCKER_PANDOC_IMAGE_NAME: 'my-pandoc-task'
-  RENDER_DIR_TASK: 'org-to-md:render-tree'
 
 tasks:
 # =====================
@@ -23,11 +22,12 @@ tasks:
       - touch '{{.TASKFILE_DIR}}/.docker_build_marker'
 
 # =====================
-  run:
+  render_tree:
     desc: "Render Org tree -> MD tree in Docker"
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
     vars:
+      RENDER_DIR_TASK: {{.RENDER_DIR_TASK | default "org-to-md:render_tree"}}
     preconditions:
       # Проверяем папку. Мы склеиваем корень запуска и переданный путь.
       - sh: test -d "{{.SOURCE_DIR}}"
@@ -37,13 +37,18 @@ tasks:
       # Мы монтируем текущую папку и вызываем таску 'render-dir' внутри контейнера
       - >
         docker run --rm 
-        -v "{{.USER_WORKING_DIR}}:/work"
-        -v "{{.SOURCE_DIR}}:/work/data-source" 
-        -v "{{.DEST_DIR}}:/work/data-result" 
-        -w /work
+        -v "{{.ROOT_DIR}}:/work/script"
+        -v "{{.SOURCE_DIR}}:/work/data_source" 
+        -v "{{.DEST_DIR}}:/work/data_result"
+
+        -w /work/script
+
         {{.DOCKER_PANDOC_IMAGE_NAME}} 
+
         {{.RENDER_DIR_TASK}} 
-        SOURCE_DIR="data-source"
-        DEST_DIR="data-result"
+
+        SOURCE_DIR="/work/data_source"
+        DEST_DIR="/work/data_result"
+
         {{if .CLI_SILENT}}--silent{{end}}
         {{if .CLI_FORCE}}--force{{end}}
