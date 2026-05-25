@@ -10,8 +10,17 @@ tasks:
     desc: "Prepare docker image to render Org -> MD"
     requires:
       vars: [DOCKER_PANDOC_IMAGE_NAME]
+    
+    sources:
+      - '{{joinPath .TASKFILE_DIR "Dockerfile"}}'
+    generates:
+      - '{{joinPath .TASKFILE_DIR ".docker_build_marker"}}'      
+    status:
+      - docker image inspect {{.DOCKER_PANDOC_IMAGE_NAME}} >/dev/null 2>&1
+    
     cmds:
       - docker build -t {{.DOCKER_PANDOC_IMAGE_NAME}} {{.TASKFILE_DIR}}
+      - touch '{{.TASKFILE_DIR}}/.docker_build_marker'
 
 # =====================
   run:
