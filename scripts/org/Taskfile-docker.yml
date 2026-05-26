@@ -36,10 +36,11 @@ tasks:
         cat << EOF
 
         ----------------------------------------------------------------------------------
-        -> Starting rendering org to md in Docker
-        -> Source Root  - {{.SOURCE_DIR}}
-        -> Dest Root    - {{.DEST_DIR}}
-        -> Task         - {{.RENDER_DIR_TASK}}
+        -> EXE IN DOCKER
+        -> Rendering org to md 
+        -> Source Root - /work/data_source - mapped to - {{.SOURCE_DIR}}
+        -> Dest Root   - /work/data_result - mapped to - {{.DEST_DIR}}
+        -> Task        - {{.RENDER_DIR_TASK}}
         ==================================================================================
         EOF
         # 

@@ -10,9 +10,19 @@ tasks:
       vars:
         [WORKSPACE_PATH, DEST_DIR]
     vars:
-      WORKSPACE_DIR: '{{dir .WORKSPACE_PATH}}'
       WORKSPACE_FILENAME: '{{base .WORKSPACE_PATH}}'
+      # WORKSPACE_DIR: '{{dir .WORKSPACE_PATH}}' misses ./
+      WORKSPACE_DIR: '{{.WORKSPACE_PATH  | replace .WORKSPACE_FILENAME ""}}'      
     cmds:
+      - |
+        cat << EOF
+        WORKSPACE_PATH      = {{.WORKSPACE_PATH}}
+        WORKSPACE_FILENAME  = {{.WORKSPACE_FILENAME}}"
+        WORKSPACE_DIR       = {{.WORKSPACE_DIR}}
+        USER_WORKING_DIR + WORKSPACE_DIR  = {{joinPath .USER_WORKING_DIR .WORKSPACE_DIR}}
+        TASKFILE_DIR + WORKSPACE_DIR      = {{joinPath .TASKFILE_DIR .WORKSPACE_DIR}}
+        EOF
+        #
       - >
         docker run --rm 
         -v "{{.WORKSPACE_DIR}}:/usr/local/structurizr" 
