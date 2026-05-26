@@ -1,0 +1,51 @@
+version: '3'
+
+includes:
+  testing:
+    taskfile: ../testing/testing.yml
+    internal: true
+
+vars:
+  TASK_FILEPATH: '{{joinPath .TASKFILE_DIR "../../scripts/Taskfile.yml" | toSlash}}'
+  CLI_TASK_FLAG: ' --taskfile "{{.TASK_FILEPATH}}" '
+
+tasks:
+# =====================
+  run_tests:
+    desc: "Run tests"
+    vars:
+      LOG_CAPTION: "dsl:docker"
+    cmds:
+      - task: testing:echo-tests-started 
+        vars:
+          LOG_CAPTION: "{{.LOG_CAPTION}}"
+
+      - task: check_dsl_export
+
+      - echo   
+      - echo "run manual:check_dsl_launch required"
+
+# =====================
+  check_dsl_export:
+    desc: "Check Structurizr DSL workspace -> PUML dir -> SVG dir"
+    vars:
+        WORKSPACE_PATH: '{{joinPath .TASKFILE_DIR "./model/workspace.dsl" | toSlash}}' 
+        PUML_DIR:       '{{joinPath .TASKFILE_DIR "./results/puml"         | toSlash}}'
+        SVG_DIR:        '{{joinPath .TASKFILE_DIR "./results/images"       | toSlash}}'
+    cmds:
+      - task: testing:assert_no_fail
+        vars:
+          LOG_CAPTION: "dsl:docker:export"
+          CLI_TASK_CMD: 'dsl:docker:export WORKSPACE_PATH="{{.WORKSPACE_PATH}}" PUML_DIR="{{.PUML_DIR}}" SVG_DIR="{{.SVG_DIR}}" {{.CLI_TASK_FLAG}}' 
+
+# =====================
+  manual:check_dsl_launch:
+    desc: "Manual check - Launch Structurizr DSL dir in browser"
+    vars:
+        WORKSPACE_DIR: '{{joinPath .TASKFILE_DIR "./model" | toSlash}}'
+        LOCAL_PORT: '9090' 
+    cmds:
+      - task: testing:assert_no_fail
+        vars:
+          LOG_CAPTION: "dsl:docker:launch"
+          CLI_TASK_CMD: 'dsl:docker:launch WORKSPACE_DIR="{{.WORKSPACE_DIR}}" LOCAL_PORT="{{.LOCAL_PORT}}" {{.CLI_TASK_FLAG}}' 

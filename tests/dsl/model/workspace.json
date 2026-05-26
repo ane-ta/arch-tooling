@@ -1,0 +1,3673 @@
+{
+  "configuration" : { },
+  "description" : "Модель Gofuture",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedDate" : "2026-05-26T12:06:49Z",
+  "model" : {
+    "people" : [ {
+      "description" : "Заказывает, отслеживает и оплачивает поездки",
+      "group" : "Пользователи",
+      "id" : "1",
+      "name" : "Пассажир",
+      "properties" : {
+        "structurizr.dsl.identifier" : "passenger"
+      },
+      "relationships" : [ {
+        "description" : "Использует",
+        "destinationId" : "14",
+        "id" : "18",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Использует",
+        "destinationId" : "13",
+        "id" : "19",
+        "linkedRelationshipId" : "18",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Принимает заказы и получает выплаты",
+      "group" : "Пользователи",
+      "id" : "2",
+      "name" : "Водитель",
+      "properties" : {
+        "structurizr.dsl.identifier" : "driver"
+      },
+      "relationships" : [ {
+        "description" : "Использует",
+        "destinationId" : "15",
+        "id" : "20",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Использует",
+        "destinationId" : "13",
+        "id" : "21",
+        "linkedRelationshipId" : "20",
+        "sourceId" : "2"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Управляет счетами и поездками",
+      "group" : "Пользователи",
+      "id" : "3",
+      "name" : "Корпоративный менеджер",
+      "properties" : {
+        "structurizr.dsl.identifier" : "corpManager"
+      },
+      "relationships" : [ {
+        "description" : "Использует",
+        "destinationId" : "16",
+        "id" : "22",
+        "sourceId" : "3",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Использует",
+        "destinationId" : "13",
+        "id" : "23",
+        "linkedRelationshipId" : "22",
+        "sourceId" : "3"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Контролирует выплаты водителям",
+      "group" : "Пользователи",
+      "id" : "4",
+      "name" : "Бухгалтер",
+      "properties" : {
+        "structurizr.dsl.identifier" : "accountant"
+      },
+      "relationships" : [ {
+        "description" : "Использует",
+        "destinationId" : "17",
+        "id" : "24",
+        "sourceId" : "4",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Использует",
+        "destinationId" : "13",
+        "id" : "25",
+        "linkedRelationshipId" : "24",
+        "sourceId" : "4"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Разрабатывает новые функции",
+      "group" : "Пользователи",
+      "id" : "5",
+      "name" : "Разработчик",
+      "properties" : {
+        "structurizr.dsl.identifier" : "dev"
+      },
+      "relationships" : [ {
+        "description" : "Пушит код",
+        "destinationId" : "44",
+        "id" : "48",
+        "sourceId" : "5",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Пушит код",
+        "destinationId" : "13",
+        "id" : "49",
+        "linkedRelationshipId" : "48",
+        "sourceId" : "5"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Мониторинг и поддержка",
+      "group" : "Пользователи",
+      "id" : "6",
+      "name" : "SRE инженер",
+      "properties" : {
+        "structurizr.dsl.identifier" : "sre"
+      },
+      "relationships" : [ {
+        "description" : "Настраивает алерты",
+        "destinationId" : "34",
+        "id" : "41",
+        "sourceId" : "6",
+        "tags" : "Relationship",
+        "technology" : "Metrics, Observability"
+      }, {
+        "description" : "Настраивает алерты",
+        "destinationId" : "13",
+        "id" : "42",
+        "linkedRelationshipId" : "41",
+        "sourceId" : "6",
+        "technology" : "Metrics, Observability"
+      }, {
+        "description" : "Мониторит систему",
+        "destinationId" : "33",
+        "id" : "43",
+        "sourceId" : "6",
+        "tags" : "Relationship",
+        "technology" : "Metrics, Logs, Observability"
+      } ],
+      "tags" : "Element,Person,Internal"
+    }, {
+      "id" : "53",
+      "name" : "Пользователь",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user"
+      },
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Платежный шлюз",
+      "documentation" : { },
+      "group" : "Внешние системы",
+      "id" : "7",
+      "name" : "Яндекс Пэй",
+      "properties" : {
+        "structurizr.dsl.identifier" : "yandexPay"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Геоданные и маршруты",
+      "documentation" : { },
+      "group" : "Внешние системы",
+      "id" : "8",
+      "name" : "Яндекс Карты",
+      "properties" : {
+        "structurizr.dsl.identifier" : "yandexMaps"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Банковские выплаты",
+      "documentation" : { },
+      "group" : "Внешние системы",
+      "id" : "9",
+      "name" : "API Банка",
+      "properties" : {
+        "structurizr.dsl.identifier" : "bankApi"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Push iOS/Android",
+      "documentation" : { },
+      "group" : "Внешние системы",
+      "id" : "10",
+      "name" : "Firebase Cloud Messaging",
+      "properties" : {
+        "structurizr.dsl.identifier" : "fcm"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Push iOS",
+      "documentation" : { },
+      "group" : "Внешние системы",
+      "id" : "11",
+      "name" : "Apple Push Notification",
+      "properties" : {
+        "structurizr.dsl.identifier" : "apns"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Push Huawei",
+      "documentation" : { },
+      "group" : "Внешние системы",
+      "id" : "12",
+      "name" : "Huawei Push Kit",
+      "properties" : {
+        "structurizr.dsl.identifier" : "huaweiPush"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "description" : "iOS/Android/Huawei",
+        "documentation" : { },
+        "id" : "14",
+        "name" : "Пассажирское приложение",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.webPassenger"
+        },
+        "relationships" : [ {
+          "description" : "Создает заказы",
+          "destinationId" : "67",
+          "id" : "70",
+          "sourceId" : "14",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Создает заказы",
+          "destinationId" : "64",
+          "id" : "71",
+          "linkedRelationshipId" : "70",
+          "sourceId" : "14",
+          "technology" : "HTTPS/REST API"
+        } ],
+        "tags" : "Element,Container,Critical,UI,Entrance",
+        "technology" : "Native"
+      }, {
+        "description" : "iOS/Android/Huawei",
+        "documentation" : { },
+        "id" : "15",
+        "name" : "Водительское приложение",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.webDriver"
+        },
+        "relationships" : [ {
+          "description" : "Обновляет статус",
+          "destinationId" : "67",
+          "id" : "72",
+          "sourceId" : "15",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Обновляет статус",
+          "destinationId" : "64",
+          "id" : "73",
+          "linkedRelationshipId" : "72",
+          "sourceId" : "15",
+          "technology" : "HTTPS/REST API"
+        } ],
+        "tags" : "Element,Container,Critical,UI,Entrance",
+        "technology" : "Native"
+      }, {
+        "description" : "Web Application",
+        "documentation" : { },
+        "id" : "16",
+        "name" : "Корпоративный веб-портал",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.webPortal"
+        },
+        "relationships" : [ {
+          "description" : "Просмотр заказов",
+          "destinationId" : "67",
+          "id" : "74",
+          "sourceId" : "16",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Просмотр заказов",
+          "destinationId" : "64",
+          "id" : "75",
+          "linkedRelationshipId" : "74",
+          "sourceId" : "16",
+          "technology" : "HTTPS/REST API"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Native, UI, Entrance"
+      }, {
+        "description" : "Управление выплатами",
+        "documentation" : { },
+        "id" : "17",
+        "name" : "Админ-панель",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.adminPortal"
+        },
+        "relationships" : [ {
+          "description" : "Управление выплатами",
+          "destinationId" : "67",
+          "id" : "76",
+          "sourceId" : "17",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Управление выплатами",
+          "destinationId" : "64",
+          "id" : "77",
+          "linkedRelationshipId" : "76",
+          "sourceId" : "17",
+          "technology" : "HTTPS/REST API"
+        } ],
+        "tags" : "Element,Container,Native,UI,Entrance",
+        "technology" : "Web Application"
+      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "239",
+          "name" : "Пайплайн отчетов",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.analyticsEngine.reportEngine"
+          },
+          "relationships" : [ {
+            "description" : "Metadata/Schema fetch",
+            "destinationId" : "61",
+            "id" : "262",
+            "sourceId" : "239",
+            "tags" : "Relationship",
+            "technology" : "gRPC / HTTP"
+          }, {
+            "description" : "Транслирует обработанные и вычисленные данные",
+            "destinationId" : "242",
+            "id" : "263",
+            "sourceId" : "239",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Транслирует обработанные и вычисленные данные",
+            "destinationId" : "241",
+            "id" : "264",
+            "linkedRelationshipId" : "263",
+            "sourceId" : "239"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "240",
+          "name" : "Пайплайн признаков для ML",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.analyticsEngine.mlEngine"
+          },
+          "relationships" : [ {
+            "description" : "Metadata/Schema fetch",
+            "destinationId" : "61",
+            "id" : "249",
+            "sourceId" : "240",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Транслирует обработанные и вычисленные данные",
+            "destinationId" : "243",
+            "id" : "251",
+            "sourceId" : "240",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Транслирует обработанные и вычисленные данные",
+            "destinationId" : "241",
+            "id" : "252",
+            "linkedRelationshipId" : "251",
+            "sourceId" : "240"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Обработка аналитических данных",
+        "documentation" : { },
+        "group" : "Analytics pipe",
+        "id" : "26",
+        "name" : "Analytics Engine",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.analyticsEngine"
+        },
+        "relationships" : [ {
+          "description" : "Metadata/Schema fetch",
+          "destinationId" : "61",
+          "id" : "250",
+          "linkedRelationshipId" : "249",
+          "sourceId" : "26"
+        }, {
+          "description" : "Транслирует обработанные и вычисленные данные",
+          "destinationId" : "243",
+          "id" : "253",
+          "linkedRelationshipId" : "251",
+          "sourceId" : "26"
+        }, {
+          "description" : "Транслирует обработанные и вычисленные данные",
+          "destinationId" : "241",
+          "id" : "254",
+          "linkedRelationshipId" : "251",
+          "sourceId" : "26"
+        }, {
+          "description" : "Транслирует обработанные и вычисленные данные",
+          "destinationId" : "242",
+          "id" : "265",
+          "linkedRelationshipId" : "263",
+          "sourceId" : "26"
+        } ],
+        "tags" : "Element,Container,AnalyticsPipe",
+        "technology" : "Spark/Flink"
+      }, {
+        "components" : [ {
+          "description" : "для BI и отчетов",
+          "documentation" : { },
+          "id" : "245",
+          "name" : "DWH (Data Warehouse)",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.dbAnalytics.reportDb"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "для ML-признаков",
+          "documentation" : { },
+          "id" : "246",
+          "name" : "Feature Store",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.dbAnalytics.featureDb"
+          },
+          "relationships" : [ {
+            "description" : "Выборка исторических данных и признаков",
+            "destinationId" : "244",
+            "id" : "259",
+            "sourceId" : "246",
+            "tags" : "Relationship",
+            "technology" : "SQL"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Хранение аналитических данных",
+        "documentation" : { },
+        "group" : "Analytics pipe",
+        "id" : "27",
+        "name" : "Analytics Db",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbAnalytics"
+        },
+        "relationships" : [ {
+          "description" : "Предоставляет данные",
+          "destinationId" : "28",
+          "id" : "29",
+          "sourceId" : "27",
+          "tags" : "Relationship,AnalyticsPipe",
+          "technology" : "SQL"
+        }, {
+          "description" : "Выборка исторических данных и признаков",
+          "destinationId" : "244",
+          "id" : "260",
+          "linkedRelationshipId" : "259",
+          "sourceId" : "27",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,AnalyticsPipe",
+        "technology" : "ClickHouse"
+      }, {
+        "description" : "Визуализация бизнес метрик",
+        "documentation" : { },
+        "group" : "Analytics pipe",
+        "id" : "28",
+        "name" : "DataLens",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dataLens"
+        },
+        "relationships" : [ {
+          "description" : "Смотрит отчеты",
+          "destinationId" : "3",
+          "id" : "30",
+          "sourceId" : "28",
+          "tags" : "Relationship,AnalyticsPipe"
+        } ],
+        "tags" : "Element,Container,AnalyticsPipe",
+        "technology" : "BI Tool"
+      }, {
+        "description" : "Сбор метрик и мониторинг",
+        "documentation" : { },
+        "group" : "Observability",
+        "id" : "32",
+        "name" : "Prometheus",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.prometheus"
+        },
+        "relationships" : [ {
+          "description" : "Алерты",
+          "destinationId" : "34",
+          "id" : "38",
+          "sourceId" : "32",
+          "tags" : "Relationship",
+          "technology" : "Metrics, Observability"
+        } ],
+        "tags" : "Element,Container,Observability,Metrics",
+        "technology" : "Monitoring system"
+      }, {
+        "description" : "Визуализация метрик. Дашборды",
+        "documentation" : { },
+        "group" : "Observability",
+        "id" : "33",
+        "name" : "Grafana",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.grafana"
+        },
+        "relationships" : [ {
+          "description" : "Логи",
+          "destinationId" : "35",
+          "id" : "36",
+          "sourceId" : "33",
+          "tags" : "Relationship,Logs,Observability",
+          "technology" : "LogQL"
+        }, {
+          "description" : "Метрики",
+          "destinationId" : "32",
+          "id" : "37",
+          "sourceId" : "33",
+          "tags" : "Relationship,Metrics,Observability",
+          "technology" : "PromQL"
+        }, {
+          "description" : "Бизнесовые метрики",
+          "destinationId" : "27",
+          "id" : "299",
+          "sourceId" : "33",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Трейсы",
+          "destinationId" : "294",
+          "id" : "306",
+          "sourceId" : "33",
+          "tags" : "Relationship",
+          "technology" : "TraceQL"
+        } ],
+        "tags" : "Element,Container,Observability,Metrics,Logs",
+        "technology" : "Grafana"
+      }, {
+        "description" : "Алертинг",
+        "documentation" : { },
+        "group" : "Observability",
+        "id" : "34",
+        "name" : "Alertmanager",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.alertManager"
+        },
+        "relationships" : [ {
+          "description" : "Приходят алерты",
+          "destinationId" : "6",
+          "id" : "39",
+          "sourceId" : "34",
+          "tags" : "Relationship,Metrics,Observability",
+          "technology" : "Email/Slack/Pager"
+        } ],
+        "tags" : "Element,Container,Observability,Metrics",
+        "technology" : "Alertmanager"
+      }, {
+        "description" : "Сбор логов",
+        "documentation" : { },
+        "group" : "Observability",
+        "id" : "35",
+        "name" : "Loki",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.loki"
+        },
+        "tags" : "Element,Container,Observability,Logs",
+        "technology" : "Loki"
+      }, {
+        "description" : "Сборка и деплой",
+        "documentation" : { },
+        "group" : "CiCd Group",
+        "id" : "44",
+        "name" : "Jenkins",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.jenkins"
+        },
+        "relationships" : [ {
+          "description" : "Управление образами",
+          "destinationId" : "45",
+          "id" : "47",
+          "sourceId" : "44",
+          "tags" : "Relationship",
+          "technology" : "Docker API"
+        }, {
+          "description" : "Запускает задачи",
+          "destinationId" : "46",
+          "id" : "50",
+          "sourceId" : "44",
+          "tags" : "Relationship",
+          "technology" : "SSH/API"
+        } ],
+        "tags" : "Element,Container,CiCd",
+        "technology" : "CI/CD"
+      }, {
+        "description" : "Хранение образов",
+        "documentation" : { },
+        "group" : "CiCd Group",
+        "id" : "45",
+        "name" : "Artifact Repository",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.artifactRepo"
+        },
+        "tags" : "Element,Container,CiCd",
+        "technology" : "Docker Registry"
+      }, {
+        "description" : "Выполнение задач сборки и тестов",
+        "documentation" : { },
+        "group" : "CiCd Group",
+        "id" : "46",
+        "name" : "CI/CD Workers",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.cicdWorker"
+        },
+        "relationships" : [ {
+          "description" : "Пушит образы",
+          "destinationId" : "45",
+          "id" : "51",
+          "sourceId" : "46",
+          "tags" : "Relationship",
+          "technology" : "Docker Push"
+        }, {
+          "description" : "Деплой кодовой базы",
+          "destinationId" : "54",
+          "id" : "307",
+          "sourceId" : "46",
+          "tags" : "Relationship,CiCd",
+          "technology" : "Docker Deploy"
+        }, {
+          "description" : "Деплой конфигурации",
+          "destinationId" : "55",
+          "id" : "308",
+          "sourceId" : "46",
+          "tags" : "Relationship,CiCd",
+          "technology" : "Docker Deploy"
+        }, {
+          "description" : "Деплой конфигурации",
+          "destinationId" : "56",
+          "id" : "309",
+          "sourceId" : "46",
+          "tags" : "Relationship,CiCd",
+          "technology" : "Docker Deploy"
+        } ],
+        "tags" : "Element,Container,CiCd",
+        "technology" : "VM/Containers"
+      }, {
+        "description" : "Доменные события, CDC события, события аналитики",
+        "documentation" : { },
+        "id" : "52",
+        "name" : "Брокер сообщений EDA",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.mqEDA"
+        },
+        "relationships" : [ {
+          "description" : "CDC events",
+          "destinationId" : "83",
+          "id" : "94",
+          "sourceId" : "52",
+          "tags" : "Relationship,Subscribe,ReplicaLink",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "CDC events",
+          "destinationId" : "81",
+          "id" : "95",
+          "linkedRelationshipId" : "94",
+          "sourceId" : "52",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "BookingCreated",
+          "destinationId" : "110",
+          "id" : "138",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "DriverAccepted\nDriverRejected",
+          "destinationId" : "100",
+          "id" : "143",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Назначить водителя",
+          "destinationId" : "102",
+          "id" : "145",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Queue"
+        }, {
+          "description" : "DriverAssigned",
+          "destinationId" : "104",
+          "id" : "148",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "DriverSearchTimeout",
+          "destinationId" : "100",
+          "id" : "150",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "BookingCancelled",
+          "destinationId" : "110",
+          "id" : "153",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "RideCompleted",
+          "destinationId" : "115",
+          "id" : "158",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "RideCompleted",
+          "destinationId" : "117",
+          "id" : "159",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "SurgeFactorUpdated",
+          "destinationId" : "104",
+          "id" : "161",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "LocationUpdated",
+          "destinationId" : "104",
+          "id" : "169",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "SendNotification",
+          "destinationId" : "120",
+          "id" : "172",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,EDA,Subscribe,Notification",
+          "technology" : "[Queue]"
+        }, {
+          "description" : "Задачи выплат",
+          "destinationId" : "118",
+          "id" : "222",
+          "sourceId" : "52",
+          "tags" : "Relationship,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Задачи уведомлений",
+          "destinationId" : "121",
+          "id" : "223",
+          "sourceId" : "52",
+          "tags" : "Relationship,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Задачи аналитики",
+          "destinationId" : "125",
+          "id" : "224",
+          "sourceId" : "52",
+          "tags" : "Relationship,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "SurgeFactorUpdated - актуальный коэффициент для конкретного района",
+          "destinationId" : "112",
+          "id" : "225",
+          "sourceId" : "52",
+          "tags" : "Relationship,ToBe,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Поток событий для аналитики",
+          "destinationId" : "240",
+          "id" : "247",
+          "sourceId" : "52",
+          "tags" : "Relationship,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Поток событий для аналитики",
+          "destinationId" : "26",
+          "id" : "248",
+          "linkedRelationshipId" : "247",
+          "sourceId" : "52",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "События для аналитики",
+          "destinationId" : "239",
+          "id" : "261",
+          "sourceId" : "52",
+          "tags" : "Relationship,Analytics,Subscribe",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Поток событий для предсказания в реальном времени",
+          "destinationId" : "244",
+          "id" : "269",
+          "sourceId" : "52",
+          "tags" : "Relationship,Subscribe",
+          "technology" : "Subscribe"
+        } ],
+        "tags" : "Element,Container,ToBe,Broker",
+        "technology" : "Kafka"
+      }, {
+        "description" : "бизнес логика после миграции",
+        "documentation" : { },
+        "group" : "Prod area",
+        "id" : "54",
+        "name" : "Prod Microservices",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.msProd"
+        },
+        "relationships" : [ {
+          "description" : "Publish prod events",
+          "destinationId" : "55",
+          "id" : "58",
+          "sourceId" : "54",
+          "tags" : "Relationship,Publish,Generalization",
+          "technology" : "Publish"
+        }, {
+          "description" : "Read Write",
+          "destinationId" : "57",
+          "id" : "60",
+          "sourceId" : "54",
+          "tags" : "Relationship,Prod,Generalization",
+          "technology" : "SQL"
+        }, {
+          "description" : "Validate event schema",
+          "destinationId" : "61",
+          "id" : "62",
+          "sourceId" : "54",
+          "tags" : "Relationship,Generalization,EDA",
+          "technology" : "gRPC"
+        }, {
+          "description" : "Метрики",
+          "destinationId" : "293",
+          "id" : "295",
+          "sourceId" : "54",
+          "tags" : "Relationship,Metrics,Observability",
+          "technology" : "prometheus_client lib"
+        }, {
+          "description" : "структурированные логи",
+          "destinationId" : "293",
+          "id" : "300",
+          "sourceId" : "54",
+          "tags" : "Relationship,Logs,Observability",
+          "technology" : "stdout"
+        }, {
+          "description" : "Трейсы",
+          "destinationId" : "293",
+          "id" : "304",
+          "sourceId" : "54",
+          "tags" : "Relationship,Traces,Observability",
+          "technology" : "Otel SDK"
+        } ],
+        "tags" : "Element,Container,Generalization,Prod,Service",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "среда для EDA",
+        "documentation" : { },
+        "group" : "Prod area",
+        "id" : "55",
+        "name" : "Broker",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.msBroker"
+        },
+        "relationships" : [ {
+          "description" : "Consume prod events",
+          "destinationId" : "54",
+          "id" : "59",
+          "sourceId" : "55",
+          "tags" : "Relationship,Subscribe,Generalization",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "CDC events",
+          "destinationId" : "83",
+          "id" : "88",
+          "sourceId" : "55",
+          "tags" : "Relationship,Subscribe,Duplication",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "CDC events",
+          "destinationId" : "81",
+          "id" : "89",
+          "linkedRelationshipId" : "88",
+          "sourceId" : "55",
+          "technology" : "Subscribe"
+        }, {
+          "description" : "Метрики очередей",
+          "destinationId" : "293",
+          "id" : "296",
+          "sourceId" : "55",
+          "tags" : "Relationship,Metrics,Observability",
+          "technology" : "???"
+        }, {
+          "description" : "структурированные логи",
+          "destinationId" : "293",
+          "id" : "301",
+          "sourceId" : "55",
+          "tags" : "Relationship,Logs,Observability",
+          "technology" : "stdout"
+        } ],
+        "tags" : "Element,Container,Generalization,Broker",
+        "technology" : "Kafka"
+      }, {
+        "description" : "Хранилища",
+        "documentation" : { },
+        "group" : "Prod area",
+        "id" : "56",
+        "name" : "Databases",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.msDatabases"
+        },
+        "relationships" : [ {
+          "description" : "Метрики БД",
+          "destinationId" : "293",
+          "id" : "297",
+          "sourceId" : "56",
+          "tags" : "Relationship,Metrics,Observability",
+          "technology" : "???"
+        }, {
+          "description" : "структурированные логи",
+          "destinationId" : "293",
+          "id" : "302",
+          "sourceId" : "56",
+          "tags" : "Relationship,Logs,Observability",
+          "technology" : "stdout"
+        } ],
+        "tags" : "Element,Container,Generalization,Database",
+        "technology" : "PostgreSQL/Redis/Clickhouse"
+      }, {
+        "description" : "Источники правды для микросервисов",
+        "documentation" : { },
+        "group" : "Prod area",
+        "id" : "57",
+        "name" : "БД Микросервисов",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.msACIDDatabases"
+        },
+        "relationships" : [ {
+          "description" : "Provide CDC events",
+          "destinationId" : "82",
+          "id" : "84",
+          "sourceId" : "57",
+          "tags" : "Relationship,Duplication,Publish",
+          "technology" : "Transaction Log"
+        }, {
+          "description" : "Provide CDC events",
+          "destinationId" : "81",
+          "id" : "85",
+          "linkedRelationshipId" : "84",
+          "sourceId" : "57",
+          "technology" : "Transaction Log"
+        } ],
+        "tags" : "Element,Container,Generalization,Prod,Database",
+        "technology" : "PostgreSQL"
+      }, {
+        "description" : "Проверяет соответствие схеме (Schema Registry), наличие обязательных полей.",
+        "documentation" : { },
+        "id" : "61",
+        "name" : "Data Contract / Schema Validation",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.validateContract"
+        },
+        "tags" : "Element,Container,DataQuality",
+        "technology" : "Confluent Schema Registry"
+      }, {
+        "description" : "Выпускает JWT для микросервисов",
+        "documentation" : { },
+        "id" : "63",
+        "name" : "Identity Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.idService"
+        },
+        "tags" : "Element,Container,ToBe,Critical,Infrastructure,Entrance",
+        "technology" : "Keycloak"
+      }, {
+        "components" : [ {
+          "description" : "Принимает старые session_id, выдает JWT",
+          "documentation" : { },
+          "id" : "65",
+          "name" : "Authorization + Legacy Auth Adapter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.apiGateway.legacyAuthAdapter"
+          },
+          "relationships" : [ {
+            "description" : "Получает сертификат авторизации",
+            "destinationId" : "63",
+            "id" : "68",
+            "sourceId" : "65",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Обменивает session_id на JWT",
+            "destinationId" : "63",
+            "id" : "282",
+            "sourceId" : "65",
+            "tags" : "Relationship",
+            "technology" : "Migration"
+          }, {
+            "description" : "Валидирует SessionId",
+            "destinationId" : "274",
+            "id" : "283",
+            "sourceId" : "65",
+            "tags" : "Relationship,Migration,Generalization",
+            "technology" : "???"
+          }, {
+            "description" : "Валидирует SessionId",
+            "destinationId" : "272",
+            "id" : "284",
+            "linkedRelationshipId" : "283",
+            "sourceId" : "65",
+            "technology" : "???"
+          } ],
+          "tags" : "Element,Component,Entrance,Migration"
+        }, {
+          "description" : "Трансформирует v1 → v2\nРоутит на монолит или микросервис по feature flag\nПерехватывает прямые вызовы внутри монолита",
+          "documentation" : { },
+          "id" : "66",
+          "name" : "Anti-Corruption Layer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.apiGateway.aclService"
+          },
+          "relationships" : [ {
+            "description" : "Перенаправляет legacy связи",
+            "destinationId" : "273",
+            "id" : "287",
+            "sourceId" : "66",
+            "tags" : "Relationship,Migration,Generalization",
+            "technology" : "???"
+          }, {
+            "description" : "Перенаправляет legacy связи",
+            "destinationId" : "272",
+            "id" : "288",
+            "linkedRelationshipId" : "287",
+            "sourceId" : "66",
+            "technology" : "???"
+          }, {
+            "description" : "Трансформирует legacy связи",
+            "destinationId" : "54",
+            "id" : "290",
+            "sourceId" : "66",
+            "tags" : "Relationship,Migration,Generalization",
+            "technology" : "???"
+          } ],
+          "tags" : "Element,Component,Migration",
+          "technology" : "???"
+        }, {
+          "description" : "Маршрутизация",
+          "documentation" : { },
+          "id" : "67",
+          "name" : "Routing",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.apiGateway.cRouting"
+          },
+          "relationships" : [ {
+            "description" : "Авторизует",
+            "destinationId" : "65",
+            "id" : "78",
+            "sourceId" : "67",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Маршрутизирует новые связи",
+            "destinationId" : "54",
+            "id" : "79",
+            "sourceId" : "67",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Создает заказы",
+            "destinationId" : "96",
+            "id" : "210",
+            "sourceId" : "67",
+            "tags" : "Relationship",
+            "technology" : "HTTPS/REST API"
+          }, {
+            "description" : "Обновляет статус",
+            "destinationId" : "97",
+            "id" : "212",
+            "sourceId" : "67",
+            "tags" : "Relationship",
+            "technology" : "HTTPS/REST API"
+          }, {
+            "description" : "Просмотр заказов",
+            "destinationId" : "99",
+            "id" : "214",
+            "sourceId" : "67",
+            "tags" : "Relationship",
+            "technology" : "HTTPS/REST API"
+          }, {
+            "description" : "Управление выплатами",
+            "destinationId" : "98",
+            "id" : "216",
+            "sourceId" : "67",
+            "tags" : "Relationship",
+            "technology" : "HTTPS/REST API"
+          }, {
+            "description" : "Маршрутизирует старые связи",
+            "destinationId" : "66",
+            "id" : "281",
+            "sourceId" : "67",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component,ToBe,Critical,Infrastructure,Entrance"
+        } ],
+        "description" : "Единая точка входа, Auth, Rate Limiting",
+        "documentation" : { },
+        "id" : "64",
+        "name" : "API Gateway",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.apiGateway"
+        },
+        "relationships" : [ {
+          "description" : "Получает сертификат авторизации",
+          "destinationId" : "63",
+          "id" : "69",
+          "linkedRelationshipId" : "68",
+          "sourceId" : "64"
+        }, {
+          "description" : "Маршрутизирует новые связи",
+          "destinationId" : "54",
+          "id" : "80",
+          "linkedRelationshipId" : "79",
+          "sourceId" : "64"
+        }, {
+          "description" : "Создает заказы",
+          "destinationId" : "96",
+          "id" : "211",
+          "linkedRelationshipId" : "210",
+          "sourceId" : "64",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Обновляет статус",
+          "destinationId" : "97",
+          "id" : "213",
+          "linkedRelationshipId" : "212",
+          "sourceId" : "64",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Просмотр заказов",
+          "destinationId" : "99",
+          "id" : "215",
+          "linkedRelationshipId" : "214",
+          "sourceId" : "64",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Управление выплатами",
+          "destinationId" : "98",
+          "id" : "217",
+          "linkedRelationshipId" : "216",
+          "sourceId" : "64",
+          "technology" : "HTTPS/REST API"
+        }, {
+          "description" : "Валидирует SessionId",
+          "destinationId" : "274",
+          "id" : "285",
+          "linkedRelationshipId" : "283",
+          "sourceId" : "64",
+          "technology" : "???"
+        }, {
+          "description" : "Валидирует SessionId",
+          "destinationId" : "272",
+          "id" : "286",
+          "linkedRelationshipId" : "283",
+          "sourceId" : "64",
+          "technology" : "???"
+        }, {
+          "description" : "Перенаправляет legacy связи",
+          "destinationId" : "273",
+          "id" : "289",
+          "linkedRelationshipId" : "287",
+          "sourceId" : "64",
+          "technology" : "???"
+        } ],
+        "tags" : "Element,Container,ToBe,Critical,Infrastructure,Entrance",
+        "technology" : "???"
+      }, {
+        "components" : [ {
+          "description" : "CDC коннектор для PostgreSQL",
+          "documentation" : { },
+          "id" : "82",
+          "name" : "CDC output",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.replicaAgent.debezium"
+          },
+          "relationships" : [ {
+            "description" : "CDC events",
+            "destinationId" : "55",
+            "id" : "86",
+            "sourceId" : "82",
+            "tags" : "Relationship,Duplication,Publish",
+            "technology" : "Publish"
+          }, {
+            "description" : "CDC events",
+            "destinationId" : "52",
+            "id" : "92",
+            "sourceId" : "82",
+            "tags" : "Relationship,Publish,ReplicaLink",
+            "technology" : "Publish"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Duplication"
+        }, {
+          "description" : "CDC коннектор-приемник для PostgreSQL",
+          "documentation" : { },
+          "id" : "83",
+          "name" : "CDC input",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.replicaAgent.jdbc"
+          },
+          "relationships" : [ {
+            "description" : "Apply CDC updates",
+            "destinationId" : "57",
+            "id" : "90",
+            "sourceId" : "83",
+            "tags" : "Relationship,Subscribe,Duplication",
+            "technology" : "SQL"
+          }, {
+            "description" : "bookings",
+            "destinationId" : "109",
+            "id" : "188",
+            "sourceId" : "83",
+            "tags" : "Relationship,ToBe,ReplicaLink,Subscribe",
+            "technology" : "SQL"
+          }, {
+            "description" : "payments",
+            "destinationId" : "109",
+            "id" : "192",
+            "sourceId" : "83",
+            "tags" : "Relationship,ToBe,ReplicaLink,Subscribe",
+            "technology" : "SQL"
+          }, {
+            "description" : "данные водителя",
+            "destinationId" : "119",
+            "id" : "195",
+            "sourceId" : "83",
+            "tags" : "Relationship,ToBe,ReplicaLink,Subscribe",
+            "technology" : "SQL"
+          }, {
+            "description" : "drivers",
+            "destinationId" : "103",
+            "id" : "197",
+            "sourceId" : "83",
+            "tags" : "Relationship,ToBe,ReplicaLink,Subscribe",
+            "technology" : "SQL"
+          }, {
+            "description" : "drivers",
+            "destinationId" : "105",
+            "id" : "199",
+            "sourceId" : "83",
+            "tags" : "Relationship,ToBe,ReplicaLink,Subscribe",
+            "technology" : "SQL"
+          }, {
+            "description" : "payouts",
+            "destinationId" : "111",
+            "id" : "203",
+            "sourceId" : "83",
+            "tags" : "Relationship,ToBe,ReplicaLink",
+            "technology" : "SQL"
+          } ],
+          "tags" : "Element,Component,Duplication",
+          "technology" : "Debezium"
+        } ],
+        "description" : "Кластер коннекторов к базам для CDC",
+        "documentation" : { },
+        "id" : "81",
+        "name" : "Kafka Connect",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.replicaAgent"
+        },
+        "relationships" : [ {
+          "description" : "CDC events",
+          "destinationId" : "55",
+          "id" : "87",
+          "linkedRelationshipId" : "86",
+          "sourceId" : "81",
+          "technology" : "Publish"
+        }, {
+          "description" : "Apply CDC updates",
+          "destinationId" : "57",
+          "id" : "91",
+          "linkedRelationshipId" : "90",
+          "sourceId" : "81",
+          "technology" : "SQL"
+        }, {
+          "description" : "CDC events",
+          "destinationId" : "52",
+          "id" : "93",
+          "linkedRelationshipId" : "92",
+          "sourceId" : "81",
+          "technology" : "Publish"
+        }, {
+          "description" : "bookings",
+          "destinationId" : "109",
+          "id" : "189",
+          "linkedRelationshipId" : "188",
+          "sourceId" : "81",
+          "technology" : "SQL"
+        }, {
+          "description" : "данные водителя",
+          "destinationId" : "119",
+          "id" : "196",
+          "linkedRelationshipId" : "195",
+          "sourceId" : "81",
+          "technology" : "SQL"
+        }, {
+          "description" : "drivers",
+          "destinationId" : "103",
+          "id" : "198",
+          "linkedRelationshipId" : "197",
+          "sourceId" : "81",
+          "technology" : "SQL"
+        }, {
+          "description" : "drivers",
+          "destinationId" : "105",
+          "id" : "200",
+          "linkedRelationshipId" : "199",
+          "sourceId" : "81",
+          "technology" : "SQL"
+        }, {
+          "description" : "payouts",
+          "destinationId" : "111",
+          "id" : "204",
+          "linkedRelationshipId" : "203",
+          "sourceId" : "81",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,Duplication",
+        "technology" : "Kafka Connect"
+      }, {
+        "documentation" : { },
+        "id" : "96",
+        "name" : "BFF Приложение пассажира",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.bffPassenger"
+        },
+        "relationships" : [ {
+          "description" : "Маршрутизирует webPassenger",
+          "destinationId" : "102",
+          "id" : "127",
+          "sourceId" : "96",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "ищет маршрут",
+          "destinationId" : "104",
+          "id" : "128",
+          "sourceId" : "96",
+          "tags" : "Relationship,LogicApi",
+          "technology" : "синхронно"
+        }, {
+          "description" : "запрашивает цену",
+          "destinationId" : "112",
+          "id" : "129",
+          "sourceId" : "96",
+          "tags" : "Relationship,LogicApi",
+          "technology" : "синхронно"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "ToBe, Frontend"
+      }, {
+        "documentation" : { },
+        "id" : "97",
+        "name" : "BFF Приложение водителя",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.bffDriver"
+        },
+        "relationships" : [ {
+          "description" : "Маршрутизирует webDriver",
+          "destinationId" : "110",
+          "id" : "130",
+          "sourceId" : "97",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "расчет заработка",
+          "destinationId" : "112",
+          "id" : "131",
+          "sourceId" : "97",
+          "tags" : "Relationship,ToBe,LogicApi",
+          "technology" : "синхронно"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "ToBe, Frontend"
+      }, {
+        "documentation" : { },
+        "id" : "98",
+        "name" : "BFF админ панель",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.bffAccountant"
+        },
+        "relationships" : [ {
+          "description" : "Маршрутизирует adminPortal",
+          "destinationId" : "117",
+          "id" : "133",
+          "sourceId" : "98",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "ToBe, Frontend"
+      }, {
+        "documentation" : { },
+        "id" : "99",
+        "name" : "BFF корпоративный портал",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.bffCorp"
+        },
+        "relationships" : [ {
+          "description" : "Маршрутизирует webPortal",
+          "destinationId" : "102",
+          "id" : "132",
+          "sourceId" : "99",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "ToBe, Frontend"
+      }, {
+        "description" : "Оркестрация",
+        "documentation" : { },
+        "group" : "Orchestration",
+        "id" : "100",
+        "name" : "Orchestration",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.orchestr"
+        },
+        "relationships" : [ {
+          "description" : "проверяет транзакцию на мошенничество",
+          "destinationId" : "108",
+          "id" : "135",
+          "sourceId" : "100",
+          "tags" : "Relationship,LogicApi",
+          "technology" : "синхронно"
+        }, {
+          "description" : "бронирует оплату на счете",
+          "destinationId" : "115",
+          "id" : "136",
+          "sourceId" : "100",
+          "tags" : "Relationship,LogicApi",
+          "technology" : "синхронно"
+        }, {
+          "description" : "BookingCreated",
+          "destinationId" : "52",
+          "id" : "137",
+          "sourceId" : "100",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "Назначить водителя",
+          "destinationId" : "52",
+          "id" : "144",
+          "sourceId" : "100",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Queue"
+        }, {
+          "description" : "Saga state",
+          "destinationId" : "101",
+          "id" : "173",
+          "sourceId" : "100",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical",
+        "technology" : "Temporal Python SDK"
+      }, {
+        "description" : "Оркестрация",
+        "documentation" : { },
+        "group" : "Orchestration",
+        "id" : "101",
+        "name" : "БД Orchestration",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlOrchestr"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "Управление бронированиями",
+        "documentation" : { },
+        "group" : "Booking",
+        "id" : "102",
+        "name" : "Booking Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.booking"
+        },
+        "relationships" : [ {
+          "description" : "инициирует SAGA",
+          "destinationId" : "100",
+          "id" : "134",
+          "sourceId" : "102",
+          "tags" : "Relationship,LogicApi",
+          "technology" : "синхронно"
+        }, {
+          "description" : "DriverAssigned",
+          "destinationId" : "52",
+          "id" : "146",
+          "sourceId" : "102",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "SendNotification - Водитель назначен",
+          "destinationId" : "52",
+          "id" : "147",
+          "sourceId" : "102",
+          "tags" : "Relationship,ToBe,EDA,Publish,Notification",
+          "technology" : "Queue"
+        }, {
+          "description" : "BookingCancelled",
+          "destinationId" : "52",
+          "id" : "151",
+          "sourceId" : "102",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "SendNotification - Заказ отменен",
+          "destinationId" : "52",
+          "id" : "152",
+          "sourceId" : "102",
+          "tags" : "Relationship,ToBe,EDA,Publish,Notification",
+          "technology" : "Queue"
+        }, {
+          "description" : "bookings, drivers",
+          "destinationId" : "103",
+          "id" : "174",
+          "sourceId" : "102",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "уведомления и аналитика",
+          "destinationId" : "52",
+          "id" : "218",
+          "sourceId" : "102",
+          "tags" : "Relationship,Publish",
+          "technology" : "Publish"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical,Booking",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Операционные данные заказов",
+        "documentation" : { },
+        "group" : "Booking",
+        "id" : "103",
+        "name" : "БД Bookings",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlBooking"
+        },
+        "relationships" : [ {
+          "description" : "bookings",
+          "destinationId" : "82",
+          "id" : "186",
+          "sourceId" : "103",
+          "tags" : "Relationship,ToBe,ReplicaLink,Publish",
+          "technology" : "Transaction Log"
+        }, {
+          "description" : "bookings",
+          "destinationId" : "81",
+          "id" : "187",
+          "linkedRelationshipId" : "186",
+          "sourceId" : "103",
+          "technology" : "Transaction Log"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Database,Booking",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "Геопоиск и маршрутизация",
+        "documentation" : { },
+        "group" : "Geo",
+        "id" : "104",
+        "name" : "Geography Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.geo"
+        },
+        "relationships" : [ {
+          "description" : "Метрики геопоиска",
+          "destinationId" : "52",
+          "id" : "171",
+          "sourceId" : "104",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "drivers, zones",
+          "destinationId" : "105",
+          "id" : "179",
+          "sourceId" : "104",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "поиск водителей",
+          "destinationId" : "107",
+          "id" : "205",
+          "sourceId" : "104",
+          "tags" : "Relationship,ToBe,Elastic,DBLink",
+          "technology" : "Elasticsearch API"
+        }, {
+          "description" : "кеш геоданных",
+          "destinationId" : "106",
+          "id" : "209",
+          "sourceId" : "104",
+          "tags" : "Relationship,ToBe,Cache,DBLink",
+          "technology" : "Redis"
+        }, {
+          "description" : "геоданные",
+          "destinationId" : "8",
+          "id" : "227",
+          "sourceId" : "104",
+          "tags" : "Relationship,ExternalApi",
+          "technology" : "Yandex Maps API"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical,Geo",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Geo",
+        "documentation" : { },
+        "group" : "Geo",
+        "id" : "105",
+        "name" : "БД Geo",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlGeo"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Geo",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "кеш геоданных",
+        "documentation" : { },
+        "group" : "Geo",
+        "id" : "106",
+        "name" : "Cache Geo",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.cacheGeo"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Cache,Geo",
+        "technology" : "Redis"
+      }, {
+        "description" : "Поисковый индекс",
+        "documentation" : { },
+        "group" : "Geo",
+        "id" : "107",
+        "name" : "GEO Drivers search DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbGeo"
+        },
+        "tags" : "Element,Container,Prod,Database,Geo",
+        "technology" : "Elasticsearch"
+      }, {
+        "description" : "Обнаружение мошенничества",
+        "documentation" : { },
+        "group" : "Fraud",
+        "id" : "108",
+        "name" : "Fraud Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.fraud"
+        },
+        "relationships" : [ {
+          "description" : "FraudAlert",
+          "destinationId" : "52",
+          "id" : "162",
+          "sourceId" : "108",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "payments, bookings",
+          "destinationId" : "109",
+          "id" : "181",
+          "sourceId" : "108",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Fraud",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Fraud",
+        "documentation" : { },
+        "group" : "Fraud",
+        "id" : "109",
+        "name" : "БД Fraud",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlFraud"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Fraud",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "Управление водителями",
+        "documentation" : { },
+        "group" : "Drivers",
+        "id" : "110",
+        "name" : "Driver Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.driverDom"
+        },
+        "relationships" : [ {
+          "description" : "FindDriverRequested",
+          "destinationId" : "52",
+          "id" : "139",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "SendNotification - Новый заказ",
+          "destinationId" : "52",
+          "id" : "140",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish,Notification",
+          "technology" : "Queue"
+        }, {
+          "description" : "DriverProposed",
+          "destinationId" : "52",
+          "id" : "141",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "DriverAccepted\nDriverRejected",
+          "destinationId" : "52",
+          "id" : "142",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "DriverSearchTimeout",
+          "destinationId" : "52",
+          "id" : "149",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "RideStarted",
+          "destinationId" : "52",
+          "id" : "154",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "SendNotification - Поездка начата",
+          "destinationId" : "52",
+          "id" : "155",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish,Notification",
+          "technology" : "Queue"
+        }, {
+          "description" : "RideCompleted",
+          "destinationId" : "52",
+          "id" : "156",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "SendNotification - Поездка закончена",
+          "destinationId" : "52",
+          "id" : "157",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish,Notification",
+          "technology" : "Queue"
+        }, {
+          "description" : "LocationUpdated",
+          "destinationId" : "52",
+          "id" : "168",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "drivers, payouts",
+          "destinationId" : "111",
+          "id" : "175",
+          "sourceId" : "110",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical,Drivers",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Данные водителей и смен",
+        "documentation" : { },
+        "group" : "Drivers",
+        "id" : "111",
+        "name" : "БД Drivers",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlDriver"
+        },
+        "relationships" : [ {
+          "description" : "drivers",
+          "destinationId" : "82",
+          "id" : "193",
+          "sourceId" : "111",
+          "tags" : "Relationship,ToBe,ReplicaLink,Publish",
+          "technology" : "Transaction Log"
+        }, {
+          "description" : "drivers",
+          "destinationId" : "81",
+          "id" : "194",
+          "linkedRelationshipId" : "193",
+          "sourceId" : "111",
+          "technology" : "Transaction Log"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Database,Drivers",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "Ценообразование",
+        "documentation" : { },
+        "group" : "Pricing",
+        "id" : "112",
+        "name" : "Pricing Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.pricing"
+        },
+        "relationships" : [ {
+          "description" : "SurgeFactorUpdated",
+          "destinationId" : "52",
+          "id" : "160",
+          "sourceId" : "112",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "pricing_rules",
+          "destinationId" : "113",
+          "id" : "176",
+          "sourceId" : "112",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "кеш ценовых правил",
+          "destinationId" : "114",
+          "id" : "206",
+          "sourceId" : "112",
+          "tags" : "Relationship,ToBe,Cache,DBLink",
+          "technology" : "Redis"
+        }, {
+          "description" : "Surge factor upsert",
+          "destinationId" : "114",
+          "id" : "207",
+          "sourceId" : "112",
+          "tags" : "Relationship,ToBe,Cache,DBLink",
+          "technology" : "Redis"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical,Pricing",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Тарифные сетки",
+        "documentation" : { },
+        "group" : "Pricing",
+        "id" : "113",
+        "name" : "БД Pricing",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlPricing"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Pricing",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "кеш ценовых правил",
+        "documentation" : { },
+        "group" : "Pricing",
+        "id" : "114",
+        "name" : "Cache Pricing",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.cachePricing"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Cache,Pricing",
+        "technology" : "Redis"
+      }, {
+        "description" : "Платежи от пассажиров",
+        "documentation" : { },
+        "group" : "Payments",
+        "id" : "115",
+        "name" : "Payments Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.payments"
+        },
+        "relationships" : [ {
+          "description" : "PaymentHeld",
+          "destinationId" : "52",
+          "id" : "163",
+          "sourceId" : "115",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "PaymentReleased",
+          "destinationId" : "52",
+          "id" : "164",
+          "sourceId" : "115",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "PaymentCharged",
+          "destinationId" : "52",
+          "id" : "165",
+          "sourceId" : "115",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "payments",
+          "destinationId" : "116",
+          "id" : "177",
+          "sourceId" : "115",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "отчеты",
+          "destinationId" : "52",
+          "id" : "220",
+          "sourceId" : "115",
+          "tags" : "Relationship,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "платежи",
+          "destinationId" : "7",
+          "id" : "229",
+          "sourceId" : "115",
+          "tags" : "Relationship,ExternalApi",
+          "technology" : "Yandex Pay API"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical,Payments",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Транзакции и логи эквайринга",
+        "documentation" : { },
+        "group" : "Payments",
+        "id" : "116",
+        "name" : "БД Payments",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlPayments"
+        },
+        "relationships" : [ {
+          "description" : "payments",
+          "destinationId" : "82",
+          "id" : "190",
+          "sourceId" : "116",
+          "tags" : "Relationship,ToBe,ReplicaLink,Publish",
+          "technology" : "Transaction Log"
+        }, {
+          "description" : "payments",
+          "destinationId" : "81",
+          "id" : "191",
+          "linkedRelationshipId" : "190",
+          "sourceId" : "116",
+          "technology" : "Transaction Log"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Database,Payments",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "Выплаты водителям",
+        "documentation" : { },
+        "group" : "Payouts",
+        "id" : "117",
+        "name" : "Payouts Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.payouts"
+        },
+        "relationships" : [ {
+          "description" : "PayoutCompleted",
+          "destinationId" : "52",
+          "id" : "166",
+          "sourceId" : "117",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "SendNotification - Выплата проведена",
+          "destinationId" : "52",
+          "id" : "167",
+          "sourceId" : "117",
+          "tags" : "Relationship,ToBe,EDA,Publish,Notification",
+          "technology" : "Queue"
+        }, {
+          "description" : "payouts",
+          "destinationId" : "119",
+          "id" : "178",
+          "sourceId" : "117",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "выплаты",
+          "destinationId" : "52",
+          "id" : "219",
+          "sourceId" : "117",
+          "tags" : "Relationship,Publish",
+          "technology" : "Publish"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Payouts",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Асинхронные задачи выплат",
+        "documentation" : { },
+        "group" : "Payouts",
+        "id" : "118",
+        "name" : "Payout Service Tasks",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.payoutTasks"
+        },
+        "relationships" : [ {
+          "description" : "выплаты и балансы",
+          "destinationId" : "119",
+          "id" : "184",
+          "sourceId" : "118",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "ORM"
+        }, {
+          "description" : "Банковские выплаты",
+          "destinationId" : "9",
+          "id" : "231",
+          "sourceId" : "118",
+          "tags" : "Relationship,ExternalApi",
+          "technology" : "REST API"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Worker,Payouts",
+        "technology" : "Celery Task"
+      }, {
+        "description" : "Реестры выплат",
+        "documentation" : { },
+        "group" : "Payouts",
+        "id" : "119",
+        "name" : "БД Payouts",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlPayouts"
+        },
+        "relationships" : [ {
+          "description" : "payouts",
+          "destinationId" : "82",
+          "id" : "201",
+          "sourceId" : "119",
+          "tags" : "Relationship,ToBe,ReplicaLink,Publish",
+          "technology" : "Transaction Log"
+        }, {
+          "description" : "payouts",
+          "destinationId" : "81",
+          "id" : "202",
+          "linkedRelationshipId" : "201",
+          "sourceId" : "119",
+          "technology" : "Transaction Log"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Database,Payouts",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "Управление уведомлениями",
+        "documentation" : { },
+        "group" : "Notification",
+        "id" : "120",
+        "name" : "Notification Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.notif"
+        },
+        "relationships" : [ {
+          "description" : "NotificationSent",
+          "destinationId" : "52",
+          "id" : "170",
+          "sourceId" : "120",
+          "tags" : "Relationship,ToBe,EDA,Publish",
+          "technology" : "Publish"
+        }, {
+          "description" : "???",
+          "destinationId" : "122",
+          "id" : "182",
+          "sourceId" : "120",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "кеш устройств",
+          "destinationId" : "123",
+          "id" : "208",
+          "sourceId" : "120",
+          "tags" : "Relationship,ToBe,Cache,DBLink",
+          "technology" : "Redis"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,Critical,Notification",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Асинхронные задачи уведомлений",
+        "documentation" : { },
+        "group" : "Notification",
+        "id" : "121",
+        "name" : "Notification Service Tasks",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.notificationTasks"
+        },
+        "relationships" : [ {
+          "description" : "данные уведомлений",
+          "destinationId" : "122",
+          "id" : "183",
+          "sourceId" : "121",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "ORM"
+        }, {
+          "description" : "Уведомления Android",
+          "destinationId" : "10",
+          "id" : "233",
+          "sourceId" : "121",
+          "tags" : "Relationship,ExternalApi",
+          "technology" : "REST API"
+        }, {
+          "description" : "Уведомления Huawei",
+          "destinationId" : "12",
+          "id" : "235",
+          "sourceId" : "121",
+          "tags" : "Relationship,ExternalApi",
+          "technology" : "REST API"
+        }, {
+          "description" : "Уведомления iOS",
+          "destinationId" : "11",
+          "id" : "237",
+          "sourceId" : "121",
+          "tags" : "Relationship,ExternalApi",
+          "technology" : "REST API"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Worker,Notification",
+        "technology" : "Celery Task"
+      }, {
+        "description" : "Данные уведомлений",
+        "documentation" : { },
+        "group" : "Notification",
+        "id" : "122",
+        "name" : "БД Notification",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlNotif"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Notification",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "description" : "кеш устройств",
+        "documentation" : { },
+        "group" : "Notification",
+        "id" : "123",
+        "name" : "Cache Notifications",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.cacheNotif"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,Cache,Notification",
+        "technology" : "Redis"
+      }, {
+        "description" : "Сбор аналитики",
+        "documentation" : { },
+        "group" : "Analytics",
+        "id" : "124",
+        "name" : "Analytics Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.analyticsDom"
+        },
+        "relationships" : [ {
+          "description" : "???",
+          "destinationId" : "126",
+          "id" : "180",
+          "sourceId" : "124",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "SQL"
+        }, {
+          "description" : "события аналитики",
+          "destinationId" : "52",
+          "id" : "221",
+          "sourceId" : "124",
+          "tags" : "Relationship,Publish",
+          "technology" : "Publish"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Service,AnalyticsS",
+        "technology" : "Python/Faust Streaming"
+      }, {
+        "description" : "Асинхронная аналитика",
+        "documentation" : { },
+        "group" : "Analytics",
+        "id" : "125",
+        "name" : "Analytics Service Tasks",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.analyticsTasks"
+        },
+        "relationships" : [ {
+          "description" : "???",
+          "destinationId" : "126",
+          "id" : "185",
+          "sourceId" : "125",
+          "tags" : "Relationship,ToBe,SQL,DBLink",
+          "technology" : "ORM"
+        }, {
+          "description" : "обработка данных",
+          "destinationId" : "26",
+          "id" : "226",
+          "sourceId" : "125",
+          "tags" : "Relationship,Analytics",
+          "technology" : "Spark Jobs"
+        } ],
+        "tags" : "Element,Container,ToBe,Prod,Worker,AnalyticsS",
+        "technology" : "Celery Task"
+      }, {
+        "description" : "???",
+        "documentation" : { },
+        "group" : "Analytics",
+        "id" : "126",
+        "name" : "БД Analytics",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.dbSqlAnalytics"
+        },
+        "tags" : "Element,Container,ToBe,Prod,Database,AnalyticsS",
+        "technology" : "PostgreSQL RDS"
+      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "242",
+          "name" : "Валидация на техническую целостность",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.validateLogic.validateBI"
+          },
+          "relationships" : [ {
+            "description" : "Записывает высококачественные данные",
+            "destinationId" : "245",
+            "id" : "266",
+            "sourceId" : "242",
+            "tags" : "Relationship",
+            "technology" : "ETL"
+          }, {
+            "description" : "Записывает высококачественные данные",
+            "destinationId" : "27",
+            "id" : "267",
+            "linkedRelationshipId" : "266",
+            "sourceId" : "242",
+            "technology" : "ETL"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "243",
+          "name" : "Валидация на смысловую пригодность (Data Quality)",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.validateLogic.validateML"
+          },
+          "relationships" : [ {
+            "description" : "Записывает высококачественные данные",
+            "destinationId" : "246",
+            "id" : "255",
+            "sourceId" : "243",
+            "tags" : "Relationship",
+            "technology" : "ETL"
+          }, {
+            "description" : "Записывает высококачественные данные",
+            "destinationId" : "27",
+            "id" : "256",
+            "linkedRelationshipId" : "255",
+            "sourceId" : "243",
+            "technology" : "ETL"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Проверяет смысл данных, на которых будет учиться ML.",
+        "documentation" : { },
+        "group" : "Analytics pipe",
+        "id" : "241",
+        "name" : "Data Quality / Business Rules Validation",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.validateLogic"
+        },
+        "relationships" : [ {
+          "description" : "Записывает высококачественные данные",
+          "destinationId" : "246",
+          "id" : "257",
+          "linkedRelationshipId" : "255",
+          "sourceId" : "241",
+          "technology" : "ETL"
+        }, {
+          "description" : "Записывает высококачественные данные",
+          "destinationId" : "27",
+          "id" : "258",
+          "linkedRelationshipId" : "255",
+          "sourceId" : "241",
+          "technology" : "ETL"
+        }, {
+          "description" : "Записывает высококачественные данные",
+          "destinationId" : "245",
+          "id" : "268",
+          "linkedRelationshipId" : "266",
+          "sourceId" : "241",
+          "technology" : "ETL"
+        } ],
+        "tags" : "Element,Container,AnalyticsPipe,DataQuality",
+        "technology" : "Great Expectations / Python"
+      }, {
+        "description" : "Обучение и Serving моделей (Pricing, Fraud, Demand)",
+        "documentation" : { },
+        "group" : "Analytics pipe",
+        "id" : "244",
+        "name" : "ML Platform",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.mlPlatform"
+        },
+        "relationships" : [ {
+          "description" : "Результаты расчета в реальном времени\nSurgeFactor / FraudAlert",
+          "destinationId" : "52",
+          "id" : "270",
+          "sourceId" : "244",
+          "tags" : "Relationship,Publish,ML",
+          "technology" : "Publish"
+        }, {
+          "description" : "Метрики точности моделей",
+          "destinationId" : "27",
+          "id" : "271",
+          "sourceId" : "244",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,ML,AnalyticsPipe",
+        "technology" : "Kubeflow / MLflow"
+      }, {
+        "components" : [ {
+          "description" : "Домены бизнес логики до миграции",
+          "documentation" : { },
+          "id" : "273",
+          "name" : "Legacy Domains",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.monolith.legacy"
+          },
+          "relationships" : [ {
+            "description" : "Обращаются к мигрировашим доменам",
+            "destinationId" : "274",
+            "id" : "275",
+            "sourceId" : "273",
+            "tags" : "Relationship,Migration,Generalization",
+            "technology" : "Django"
+          }, {
+            "description" : "Прежние события",
+            "destinationId" : "276",
+            "id" : "277",
+            "sourceId" : "273",
+            "tags" : "Relationship,Publish,Migration",
+            "technology" : "AMQP Publish"
+          } ],
+          "tags" : "Element,Component,Migration,Generalization"
+        }, {
+          "description" : "Обеспечивает обратную совместимость внутренних связей при миграции.",
+          "documentation" : { },
+          "id" : "274",
+          "name" : "Anti-Corruption Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "goFuture.monolith.aclComponent"
+          },
+          "relationships" : [ {
+            "description" : "Трансформирует legacy связи",
+            "destinationId" : "54",
+            "id" : "291",
+            "sourceId" : "274",
+            "tags" : "Relationship,Migration,Generalization",
+            "technology" : "???"
+          } ],
+          "tags" : "Element,Component,Migration,Generalization",
+          "technology" : "???"
+        } ],
+        "description" : "Legacy бизнес логика",
+        "documentation" : { },
+        "id" : "272",
+        "name" : "Монолит",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.monolith"
+        },
+        "relationships" : [ {
+          "description" : "Прежние события",
+          "destinationId" : "276",
+          "id" : "278",
+          "linkedRelationshipId" : "277",
+          "sourceId" : "272",
+          "technology" : "AMQP Publish"
+        }, {
+          "description" : "Трансформирует legacy связи",
+          "destinationId" : "54",
+          "id" : "292",
+          "linkedRelationshipId" : "291",
+          "sourceId" : "272",
+          "technology" : "???"
+        } ],
+        "tags" : "Element,Container,Migration,Generalization",
+        "technology" : "Django App"
+      }, {
+        "description" : "Очередь задач",
+        "documentation" : { },
+        "id" : "276",
+        "name" : "Брокер сообщений обратной совместимости",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.mq"
+        },
+        "relationships" : [ {
+          "description" : "Прежние события",
+          "destinationId" : "273",
+          "id" : "279",
+          "sourceId" : "276",
+          "tags" : "Relationship,Subscribe,Migration",
+          "technology" : "AMQP Subscribe"
+        }, {
+          "description" : "Прежние события",
+          "destinationId" : "272",
+          "id" : "280",
+          "linkedRelationshipId" : "279",
+          "sourceId" : "276",
+          "technology" : "AMQP Subscribe"
+        } ],
+        "tags" : "Element,Container,Broker,Migration",
+        "technology" : "RabbitMQ"
+      }, {
+        "description" : "Сбор и обработка телеметрии: метрики, логи, трейсы",
+        "documentation" : { },
+        "id" : "293",
+        "name" : "Агент телеметрии",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.alloy"
+        },
+        "relationships" : [ {
+          "description" : "технические и бизнес метрики",
+          "destinationId" : "32",
+          "id" : "298",
+          "sourceId" : "293",
+          "tags" : "Relationship",
+          "technology" : "Metrics, Observability"
+        }, {
+          "description" : "Logs",
+          "destinationId" : "35",
+          "id" : "303",
+          "sourceId" : "293",
+          "tags" : "Relationship",
+          "technology" : "Metrics, Observability"
+        }, {
+          "description" : "Трейсы",
+          "destinationId" : "294",
+          "id" : "305",
+          "sourceId" : "293",
+          "tags" : "Relationship,Traces,Observability",
+          "technology" : "OTLP"
+        } ],
+        "tags" : "Element,Container,ToBe,Observability",
+        "technology" : "Grafana Alloy Agent"
+      }, {
+        "description" : "Трейсинг",
+        "documentation" : { },
+        "group" : "Observability",
+        "id" : "294",
+        "name" : "Хранилище трейсов",
+        "properties" : {
+          "structurizr.dsl.identifier" : "goFuture.tempo"
+        },
+        "tags" : "Element,Container,ToBe,Observability",
+        "technology" : "Grafana Tempo"
+      } ],
+      "documentation" : { },
+      "id" : "13",
+      "name" : "GoFuture Platform",
+      "properties" : {
+        "structurizr.dsl.identifier" : "goFuture"
+      },
+      "relationships" : [ {
+        "description" : "Смотрит отчеты",
+        "destinationId" : "3",
+        "id" : "31",
+        "linkedRelationshipId" : "30",
+        "sourceId" : "13"
+      }, {
+        "description" : "Приходят алерты",
+        "destinationId" : "6",
+        "id" : "40",
+        "linkedRelationshipId" : "39",
+        "sourceId" : "13",
+        "technology" : "Email/Slack/Pager"
+      }, {
+        "description" : "геоданные",
+        "destinationId" : "8",
+        "id" : "228",
+        "linkedRelationshipId" : "227",
+        "sourceId" : "13",
+        "technology" : "Yandex Maps API"
+      }, {
+        "description" : "платежи",
+        "destinationId" : "7",
+        "id" : "230",
+        "linkedRelationshipId" : "229",
+        "sourceId" : "13",
+        "technology" : "Yandex Pay API"
+      }, {
+        "description" : "Банковские выплаты",
+        "destinationId" : "9",
+        "id" : "232",
+        "linkedRelationshipId" : "231",
+        "sourceId" : "13",
+        "technology" : "REST API"
+      }, {
+        "description" : "Уведомления Android",
+        "destinationId" : "10",
+        "id" : "234",
+        "linkedRelationshipId" : "233",
+        "sourceId" : "13",
+        "technology" : "REST API"
+      }, {
+        "description" : "Уведомления Huawei",
+        "destinationId" : "12",
+        "id" : "236",
+        "linkedRelationshipId" : "235",
+        "sourceId" : "13",
+        "technology" : "REST API"
+      }, {
+        "description" : "Уведомления iOS",
+        "destinationId" : "11",
+        "id" : "238",
+        "linkedRelationshipId" : "237",
+        "sourceId" : "13",
+        "technology" : "REST API"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "GoFuture",
+  "properties" : {
+    "structurizr.inspection.error" : "66",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "272",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "54",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "55",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "63",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "65",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "66",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "67",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "273",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "274",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "276",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "0102_Migration_to_MS",
+      "name" : "Component View: GoFuture Platform - Монолит",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "18"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "275"
+      }, {
+        "id" : "277"
+      }, {
+        "id" : "279"
+      }, {
+        "id" : "281"
+      }, {
+        "id" : "282"
+      }, {
+        "id" : "283"
+      }, {
+        "id" : "287"
+      }, {
+        "id" : "290"
+      }, {
+        "id" : "291"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "70"
+      }, {
+        "id" : "72"
+      }, {
+        "id" : "74"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "78"
+      }, {
+        "id" : "79"
+      } ],
+      "title" : "Миграция на микросервисы"
+    } ],
+    "configuration" : {
+      "properties" : {
+        "c4plantuml.tags" : "true"
+      },
+      "styles" : {
+        "elements" : [ {
+          "background" : "#218c74",
+          "tag" : "AnalyticsPipe"
+        }, {
+          "background" : "#4b7bec",
+          "shape" : "Pipe",
+          "tag" : "Broker"
+        }, {
+          "background" : "#85bbf0",
+          "color" : "#000000",
+          "tag" : "Component"
+        }, {
+          "background" : "#1168bd",
+          "color" : "#ffffff",
+          "tag" : "Container"
+        }, {
+          "background" : "#1c62b9",
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#23313f",
+          "stroke" : "#ffffff",
+          "tag" : "GeoRouting"
+        }, {
+          "background" : "#2c3e50",
+          "stroke" : "#ffffff",
+          "tag" : "Infrastructure"
+        }, {
+          "background" : "#8e44ad",
+          "tag" : "Observability"
+        }, {
+          "background" : "#c0392b",
+          "stroke" : "#ffffff",
+          "tag" : "Safety"
+        }, {
+          "background" : "#e0e0e0",
+          "color" : "#888888",
+          "tag" : "Standby"
+        } ],
+        "relationships" : [ {
+          "color" : "#e67e22",
+          "tag" : "Publish"
+        }, {
+          "color" : "#424242",
+          "routing" : "Orthogonal",
+          "tag" : "Relationship"
+        }, {
+          "color" : "#f1c40f",
+          "tag" : "Subscribe"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "81",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "100",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "101",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "102",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "103",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "104",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "105",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "106",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "107",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "108",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "109",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "110",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "111",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "112",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "113",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "114",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "115",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "116",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "117",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "118",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "119",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "120",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "121",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "122",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "123",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "124",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "125",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "126",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "0101_MS_Data_Interaction",
+      "name" : "Container View: GoFuture Platform",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "173"
+      }, {
+        "id" : "174"
+      }, {
+        "id" : "175"
+      }, {
+        "id" : "176"
+      }, {
+        "id" : "177"
+      }, {
+        "id" : "178"
+      }, {
+        "id" : "179"
+      }, {
+        "id" : "180"
+      }, {
+        "id" : "181"
+      }, {
+        "id" : "182"
+      }, {
+        "id" : "183"
+      }, {
+        "id" : "184"
+      }, {
+        "id" : "185"
+      }, {
+        "id" : "187"
+      }, {
+        "id" : "189"
+      }, {
+        "id" : "191"
+      }, {
+        "id" : "194"
+      }, {
+        "id" : "196"
+      }, {
+        "id" : "198"
+      }, {
+        "id" : "200"
+      }, {
+        "id" : "202"
+      }, {
+        "id" : "204"
+      }, {
+        "id" : "205"
+      }, {
+        "id" : "206"
+      }, {
+        "id" : "207"
+      }, {
+        "id" : "208"
+      }, {
+        "id" : "209"
+      }, {
+        "id" : "93"
+      }, {
+        "id" : "95"
+      } ],
+      "softwareSystemId" : "13",
+      "title" : "Микросервисы и репликации данных между ними"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "100",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "102",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "104",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "108",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "110",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "112",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "115",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "117",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "118",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "120",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "121",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "124",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "125",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "0201_ProdServices_Logic_Interaction",
+      "name" : "Container View: GoFuture Platform",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "134"
+      }, {
+        "id" : "135"
+      }, {
+        "id" : "136"
+      }, {
+        "id" : "137"
+      }, {
+        "id" : "138"
+      }, {
+        "id" : "139"
+      }, {
+        "id" : "140"
+      }, {
+        "id" : "141"
+      }, {
+        "id" : "142"
+      }, {
+        "id" : "143"
+      }, {
+        "id" : "144"
+      }, {
+        "id" : "145"
+      }, {
+        "id" : "146"
+      }, {
+        "id" : "147"
+      }, {
+        "id" : "148"
+      }, {
+        "id" : "149"
+      }, {
+        "id" : "150"
+      }, {
+        "id" : "151"
+      }, {
+        "id" : "152"
+      }, {
+        "id" : "153"
+      }, {
+        "id" : "154"
+      }, {
+        "id" : "155"
+      }, {
+        "id" : "156"
+      }, {
+        "id" : "157"
+      }, {
+        "id" : "158"
+      }, {
+        "id" : "159"
+      }, {
+        "id" : "160"
+      }, {
+        "id" : "161"
+      }, {
+        "id" : "162"
+      }, {
+        "id" : "163"
+      }, {
+        "id" : "164"
+      }, {
+        "id" : "165"
+      }, {
+        "id" : "166"
+      }, {
+        "id" : "167"
+      }, {
+        "id" : "168"
+      }, {
+        "id" : "169"
+      }, {
+        "id" : "170"
+      }, {
+        "id" : "171"
+      }, {
+        "id" : "172"
+      }, {
+        "id" : "227"
+      }, {
+        "id" : "229"
+      }, {
+        "id" : "231"
+      }, {
+        "id" : "233"
+      }, {
+        "id" : "235"
+      }, {
+        "id" : "237"
+      } ],
+      "softwareSystemId" : "13",
+      "title" : "EDA взаимодействие микросервисов"
+    }, {
+      "elements" : [ {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "32",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "34",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "54",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "55",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "56",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "293",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "294",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "0204_Obervability",
+      "name" : "Container View: GoFuture Platform",
+      "order" : 6,
+      "relationships" : [ {
+        "id" : "295"
+      }, {
+        "id" : "296"
+      }, {
+        "id" : "297"
+      }, {
+        "id" : "298"
+      }, {
+        "id" : "299"
+      }, {
+        "id" : "300"
+      }, {
+        "id" : "301"
+      }, {
+        "id" : "302"
+      }, {
+        "id" : "303"
+      }, {
+        "id" : "304"
+      }, {
+        "id" : "305"
+      }, {
+        "id" : "306"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "37"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      } ],
+      "softwareSystemId" : "13",
+      "title" : "Система обеспечения наблюдаемости"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "61",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "125",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "241",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "244",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "0401_Analytics",
+      "name" : "Container View: GoFuture Platform",
+      "order" : 7,
+      "relationships" : [ {
+        "id" : "224"
+      }, {
+        "id" : "226"
+      }, {
+        "id" : "248"
+      }, {
+        "id" : "250"
+      }, {
+        "id" : "254"
+      }, {
+        "id" : "258"
+      }, {
+        "id" : "260"
+      }, {
+        "id" : "269"
+      }, {
+        "id" : "270"
+      }, {
+        "id" : "271"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "299"
+      }, {
+        "id" : "30"
+      } ],
+      "softwareSystemId" : "13",
+      "title" : "Аналитика BI и ML"
+    } ],
+    "dynamicViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Happy path при создании заказа",
+      "elementId" : "13",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "64",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "96",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "100",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "102",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "104",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "108",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "110",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "115",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "0202_booking_happy_path",
+      "name" : "Dynamic View: GoFuture Platform",
+      "order" : 4,
+      "properties" : {
+        "plantuml.sequenceDiagram" : "true"
+      },
+      "relationships" : [ {
+        "description" : "Создает заказ",
+        "id" : "18",
+        "order" : "1",
+        "response" : false
+      }, {
+        "description" : "POST /order",
+        "id" : "71",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "Маршрутизирует",
+        "id" : "211",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "Создает заказ",
+        "id" : "127",
+        "order" : "4",
+        "response" : false
+      }, {
+        "description" : "BookingCreated",
+        "id" : "146",
+        "order" : "5",
+        "response" : false
+      }, {
+        "description" : "startSaga(booking)",
+        "id" : "134",
+        "order" : "6",
+        "response" : false
+      }, {
+        "description" : "checkUserFraud()",
+        "id" : "135",
+        "order" : "7",
+        "response" : false
+      }, {
+        "description" : "holdPayment()",
+        "id" : "136",
+        "order" : "8",
+        "response" : false
+      }, {
+        "description" : "startSaga(booking) result",
+        "id" : "134",
+        "order" : "9",
+        "response" : true
+      }, {
+        "description" : "Заказ принят, назначаем водителя",
+        "id" : "127",
+        "order" : "10",
+        "response" : true
+      }, {
+        "description" : "Queue: FindDriver()",
+        "id" : "137",
+        "order" : "11",
+        "response" : false
+      }, {
+        "description" : "Queue: FindDriver()",
+        "id" : "138",
+        "order" : "12",
+        "response" : false
+      }, {
+        "description" : "FindDriverRequested",
+        "id" : "139",
+        "order" : "13",
+        "response" : false
+      }, {
+        "description" : "DriverProposed",
+        "id" : "141",
+        "order" : "14",
+        "response" : false
+      }, {
+        "description" : "DriverAccepted",
+        "id" : "139",
+        "order" : "15",
+        "response" : false
+      }, {
+        "description" : "DriverAccepted",
+        "id" : "143",
+        "order" : "16",
+        "response" : false
+      }, {
+        "description" : "queue: assignDriver()",
+        "id" : "137",
+        "order" : "17",
+        "response" : false
+      }, {
+        "description" : "queue: assignDriver()",
+        "id" : "145",
+        "order" : "18",
+        "response" : false
+      }, {
+        "description" : "DriverAssigned",
+        "id" : "146",
+        "order" : "19",
+        "response" : false
+      }, {
+        "description" : "DriverAssigned",
+        "id" : "148",
+        "order" : "20",
+        "response" : false
+      }, {
+        "description" : "publish: RideStarted",
+        "id" : "139",
+        "order" : "21",
+        "response" : false
+      }, {
+        "description" : "RideCompleted",
+        "id" : "156",
+        "order" : "22",
+        "response" : false
+      }, {
+        "description" : "RideCompleted",
+        "id" : "143",
+        "order" : "23",
+        "response" : false
+      }, {
+        "description" : "queue: chargePayment",
+        "id" : "137",
+        "order" : "24",
+        "response" : false
+      }, {
+        "description" : "queue: chargePayment",
+        "id" : "158",
+        "order" : "25",
+        "response" : false
+      }, {
+        "description" : "PaymentCharged",
+        "id" : "165",
+        "order" : "26",
+        "response" : false
+      }, {
+        "description" : "PaymentCharged",
+        "id" : "143",
+        "order" : "27",
+        "response" : false
+      }, {
+        "description" : "BookingCompleted",
+        "id" : "137",
+        "order" : "28",
+        "response" : false
+      } ],
+      "title" : "EDA Оркестрация заказа - Happy path при создании заказ"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Водитель не найден при создании заказа",
+      "elementId" : "13",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "64",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "96",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "100",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "102",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "108",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "110",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "115",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "0203_booking_driver_not_found",
+      "name" : "Dynamic View: GoFuture Platform",
+      "order" : 5,
+      "properties" : {
+        "plantuml.sequenceDiagram" : "true"
+      },
+      "relationships" : [ {
+        "description" : "Создает заказ",
+        "id" : "18",
+        "order" : "1",
+        "response" : false
+      }, {
+        "description" : "POST /order",
+        "id" : "71",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "Маршрутизирует",
+        "id" : "211",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "Создает заказ",
+        "id" : "127",
+        "order" : "4",
+        "response" : false
+      }, {
+        "description" : "BookingCreated",
+        "id" : "146",
+        "order" : "5",
+        "response" : false
+      }, {
+        "description" : "startSaga(booking)",
+        "id" : "134",
+        "order" : "6",
+        "response" : false
+      }, {
+        "description" : "checkUserFraud()",
+        "id" : "135",
+        "order" : "7",
+        "response" : false
+      }, {
+        "description" : "holdPayment()",
+        "id" : "136",
+        "order" : "8",
+        "response" : false
+      }, {
+        "description" : "startSaga(booking) result",
+        "id" : "134",
+        "order" : "9",
+        "response" : true
+      }, {
+        "description" : "Заказ принят, назначаем водителя",
+        "id" : "127",
+        "order" : "10",
+        "response" : true
+      }, {
+        "description" : "Queue: FindDriver()",
+        "id" : "137",
+        "order" : "11",
+        "response" : false
+      }, {
+        "description" : "Queue: FindDriver()",
+        "id" : "138",
+        "order" : "12",
+        "response" : false
+      }, {
+        "description" : "FindDriverRequested",
+        "id" : "139",
+        "order" : "13",
+        "response" : false
+      }, {
+        "description" : "DriverSearchTimeout",
+        "id" : "149",
+        "order" : "14",
+        "response" : false
+      }, {
+        "description" : "DriverSearchTimeout",
+        "id" : "150",
+        "order" : "15",
+        "response" : false
+      }, {
+        "description" : "BookingCancelled",
+        "id" : "145",
+        "order" : "16",
+        "response" : false
+      }, {
+        "description" : "Заказ отменен",
+        "id" : "127",
+        "order" : "17",
+        "response" : true
+      }, {
+        "description" : "Queue: releasePayment()",
+        "id" : "137",
+        "order" : "18",
+        "response" : false
+      }, {
+        "description" : "Queue: releasePayment()",
+        "id" : "158",
+        "order" : "19",
+        "response" : false
+      }, {
+        "description" : "PaymentReleased",
+        "id" : "164",
+        "order" : "20",
+        "response" : false
+      }, {
+        "description" : "PaymentReleased",
+        "id" : "143",
+        "order" : "21",
+        "response" : false
+      }, {
+        "description" : "BookingCancelled",
+        "id" : "137",
+        "order" : "22",
+        "response" : false
+      }, {
+        "description" : "BookingCancelled",
+        "id" : "153",
+        "order" : "23",
+        "response" : false
+      } ],
+      "title" : "EDA Оркестрация заказа - Водитель не найден"
+    }, {
+      "description" : "Surge",
+      "elementId" : "13",
+      "elements" : [ {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "112",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "114",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "244",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "0402_SurgeFactor_Update",
+      "name" : "Dynamic View: GoFuture Platform",
+      "order" : 8,
+      "properties" : {
+        "plantuml.sequenceDiagram" : "true"
+      },
+      "relationships" : [ {
+        "description" : "События для динамического ценообразования",
+        "id" : "269",
+        "order" : "1",
+        "response" : false
+      }, {
+        "description" : "SurgeFactorUpdated",
+        "id" : "270",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "SurgeFactorUpdated",
+        "id" : "225",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "Surge factor upsert",
+        "id" : "207",
+        "order" : "4",
+        "response" : false
+      }, {
+        "description" : "События для переобучения ML",
+        "id" : "248",
+        "order" : "5",
+        "response" : false
+      } ],
+      "title" : "Пересчет динамического ценообразования"
+    } ]
+  }
+}
