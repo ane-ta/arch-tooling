@@ -1,3 +1,4 @@
 .task/
 .docker_build_marker
 **/results/
+**/.structurizr/

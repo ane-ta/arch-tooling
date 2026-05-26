@@ -1,0 +1,27 @@
+# Мониторинг 
+    alloy = container "Агент телеметрии" "Сбор и обработка телеметрии: метрики, логи, трейсы" "Grafana Alloy Agent" "ToBe, Observability"
+
+    group Observability {
+        tempo = container "Хранилище трейсов" "Трейсинг" "Grafana Tempo" "ToBe, Observability"
+    }
+
+    # C2
+    msProd -> alloy "Метрики" "prometheus_client lib" "Metrics, Observability"
+    msBroker -> alloy "Метрики очередей" "???" "Metrics, Observability"
+    msDatabases -> alloy "Метрики БД" "???" "Metrics, Observability"
+
+    alloy -> prometheus "технические и бизнес метрики" "Metrics, Observability"
+
+    grafana -> dbAnalytics "Бизнесовые метрики"
+# Логи
+    # C2
+    msProd -> alloy "структурированные логи" "stdout" "Logs, Observability"
+    msBroker -> alloy "структурированные логи" "stdout" "Logs, Observability"
+    msDatabases -> alloy "структурированные логи" "stdout" "Logs, Observability"
+
+    alloy -> loki "Logs" "Metrics, Observability"
+    
+# Трейсы
+    msProd -> alloy "Трейсы" "Otel SDK" "Traces, Observability"
+    alloy -> tempo "Трейсы" "OTLP" "Traces, Observability"
+    grafana -> tempo "Трейсы" "TraceQL"

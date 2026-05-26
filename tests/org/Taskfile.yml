@@ -11,21 +11,25 @@ vars:
   CLI_TASK_FLAG: ' --taskfile "{{.TASK_FILEPATH}}" '
 
 tasks:
-  
+# =====================
   run_tests:
     desc: "Run tests"
+    vars:
+      LOG_CAPTION: "org-to-md:docker"
+
     cmds:
       - task: testing:echo-tests-started 
         vars:
-          LOG_CAPTION: "org-to-md:docker"
+          LOG_CAPTION: "{{.LOG_CAPTION}}"
 
       - task: check_docker_build
       - task: check_docker_render_tree
 
       - task: testing:echo-tests-passed 
         vars:
-          LOG_CAPTION: "org-to-md:docker"
+          LOG_CAPTION: "{{.LOG_CAPTION}}"
 
+# =====================
   check_docker_build:
   cmds:
     - task: testing:assert_no_fail
@@ -33,6 +37,7 @@ tasks:
         LOG_CAPTION: "org-to-md:docker:build"
         CLI_TASK_CMD: 'org-to-md:docker:build {{.CLI_TASK_FLAG}}' 
 
+# =====================
   check_docker_render_tree:
     vars:
       # SOURCE_ABS_DIR: '{{joinPath .ROOT_DIR "/../../../GoFuture/Task1/docs" | toSlash}}'
