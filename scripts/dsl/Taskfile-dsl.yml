@@ -52,7 +52,7 @@ tasks:
   
 # =====================
   docker:export:
-    desc: "DOCKER Export Structurizr DSL workspace -> PUML dir -> SVG dir"
+    desc: DOCKER Export Structurizr DSL. Workspace -> PUML dir -> SVG dir
     requires:
       vars: [WORKSPACE_PATH, PUML_DIR, SVG_DIR]
     cmds:
@@ -69,7 +69,7 @@ tasks:
 
 # =====================
   docker:launch:
-    desc: "DOCKER Launch Structurizr DSL dir in browser"
+    desc: "DOCKER Launch Structurizr Visualizer in browser"
     requires:
       vars:
         [WORKSPACE_DIR, LOCAL_PORT]

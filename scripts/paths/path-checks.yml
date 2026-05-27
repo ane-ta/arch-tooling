@@ -6,6 +6,7 @@ vars:
 tasks:
 
   is_abs:
+    desc: "Provide path is absolute."
     requires:
       vars: [CHECK_PATH]
 
@@ -19,6 +20,7 @@ tasks:
           Критическая ошибка: Путь должен быть АБСОЛЮТНЫМ!
           Получен относительный путь: "{{.CHECK_PATH}}"
 
+    desc: "Provide path is relative."
   is_rel:
     requires:
       vars: [CHECK_PATH]

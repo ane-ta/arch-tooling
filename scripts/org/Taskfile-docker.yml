@@ -6,7 +6,7 @@ vars:
 tasks:
 # =====================
   build:
-    desc: "Prepare docker image to render Org -> MD"
+    desc: "DOCKER Prepare docker image to render Org -> MD."
     requires:
       vars: [DOCKER_PANDOC_IMAGE_NAME]
     
@@ -23,7 +23,7 @@ tasks:
 
 # =====================
   render_tree:
-    desc: "Render Org tree -> MD tree in Docker"
+    desc: "DOCKER Render Org tree -> MD tree in Docker."
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
     vars:
@@ -38,8 +38,8 @@ tasks:
         ----------------------------------------------------------------------------------
         -> EXE IN DOCKER
         -> Rendering org to md 
-        -> Source Root - /work/data_source - mapped to - {{.SOURCE_DIR}}
-        -> Dest Root   - /work/data_result - mapped to - {{.DEST_DIR}}
+        -> Source Root - /work/data_source    - mapped to - {{.SOURCE_DIR}}
+        -> Dest Root   - /work/data_result    - mapped to - {{.DEST_DIR}}
         -> Task        - {{.RENDER_DIR_TASK}}
         ==================================================================================
         EOF

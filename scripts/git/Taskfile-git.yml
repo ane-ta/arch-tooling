@@ -3,32 +3,25 @@ version: '3'
 tasks:
   
   submodules:init:
-    desc: "Инициализировать сабмодули и скачать инструменты"
+    desc: "Initialize all submodules and download their content."
     cmds:
       - git submodule update --init --recursive
     status:
       - test -f ./tools/arch-tooling/Taskfile.yml
   
   submodules:sync:
-    desc: "Обновить инструменты до последней версии с сервера"
+    desc: "Update submodules to latest remote version."
     cmds:
       - echo "Обновляю инструменты..."
       - git submodule update --remote --merge
       - echo "Готово! Не забудь закоммитить обновление ссылки в проекте."
   
-  push:
-    desc: "Запушить проект вместе с изменениями в инструментах"
+  submodules:push:
+    desc: "Push project with all submodules to remote if they have any commits."
     cmds:
       - git push --recurse-submodules=on-demand
 
   submodules:status:
-    desc: "Показать статус всех сабмодулей проекта"
+    desc: "Show status of every submodule."
     cmds:
       - git submodule status --recursive
-
-  setup:
-    desc: "Полная настройка проекта для разработки"
-    cmds:
-      - task: submodules:init
-      - task: dsl:prepare # например, скачать нужные докер-образы
-      - echo "Проект готов к работе!"

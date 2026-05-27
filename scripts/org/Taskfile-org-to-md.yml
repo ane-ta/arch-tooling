@@ -3,7 +3,7 @@ version: '3'
 tasks:
 # =====================
   process_file:
-    desc: "Process Org -> MD in pandoc"
+    desc: "Process Org -> MD in Pandoc installed in system."
     internal: true
     requires:
       vars: [SOURCE_FILE, DEST_FILE]
@@ -22,7 +22,7 @@ tasks:
       - echo "-------------------"
      
   post_process_file:
-    desc: "Post-process MD cleaning after pandoc"
+    desc: "Post-process MD cleaning after Pandoc."
     internal: true
     requires:
       vars: [DEST_FILE]
@@ -33,7 +33,7 @@ tasks:
 
   # Реализация для Linux (в Докере)
   post_process_file_linux:
-    desc: "Post-process MD cleaning after pandoc for Linux"
+    desc: "Post-process MD cleaning after pandoc for Linux."
     internal: true
     requires:
       vars: [DEST_FILE]
@@ -57,7 +57,7 @@ tasks:
 
   # Реализация для Windows (заглушка)
   post_process_file_windows:
-    desc: "Post-process MD cleaning after pandoc for Windows"    
+    desc: "Post-process MD cleaning after pandoc for Windows."    
     internal: true
     requires:
       vars: [DEST_FILE]
@@ -66,7 +66,7 @@ tasks:
 
 # =====================
   render_tree_file:
-    desc: "Process Org file -> MD file in tree"
+    desc: "Process Org file -> MD file in tree."
     internal: true
     requires:
       vars: [SOURCE_FILE, SOURCE_ROOT, DEST_DIR]
@@ -88,7 +88,7 @@ tasks:
 
 # =====================
   render_tree:
-    desc: "Process Org file tree -> MD file tree"
+    desc: "Render Org file tree -> MD file tree."
     # internal: true
     requires:
       vars: [SOURCE_DIR, DEST_DIR]
