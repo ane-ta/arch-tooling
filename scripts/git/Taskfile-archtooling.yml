@@ -1,0 +1,40 @@
+version: '3'
+
+includes:
+  submodules:
+    taskfile: Taskfile-submodules.yml
+    flatten: true
+
+tasks:
+# =====================
+  u_arch:
+    desc: "Update arch-tooling submodule in all projects."
+    cmds:
+      - task: update_in_repos
+        vars:
+          REPOS_DIR: '{{joinPath .ROOT_DIR "../"}}'
+          SUBMODULE_REL_PATH: 'arch-tooling'
+          MAKE_COMMIT: 'false'
+          MAKE_PUSH: 'false'
+
+# =====================
+  uc_arch:
+    desc: "Update and commit arch-tooling submodule in all projects."
+    cmds:
+      - task: update_in_repos
+        vars:
+          REPOS_DIR: '{{joinPath .ROOT_DIR "../"}}'
+          SUBMODULE_REL_PATH: 'arch-tooling'
+          MAKE_COMMIT: 'true'
+          MAKE_PUSH: 'false'
+
+# =====================
+  ucp_arch:
+    desc: "Update, commit and push arch-tooling submodule in all projects."
+    cmds:
+      - task: update_in_repos
+        vars:
+          REPOS_DIR: '{{joinPath .ROOT_DIR "../"}}'
+          SUBMODULE_REL_PATH: 'arch-tooling'
+          MAKE_COMMIT: 'true'
+          MAKE_PUSH: 'true'

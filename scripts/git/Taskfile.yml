@@ -1,0 +1,10 @@
+version: '3'
+
+includes:
+  submodules:
+    taskfile: ./Taskfile-submodules.yml
+    aliases: [subm]
+
+  submodules:
+    taskfile: ./Taskfile-archtooling.yml
+    aliases: [subm]

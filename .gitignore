@@ -2,3 +2,4 @@
 .docker_build_marker
 **/results/
 **/.structurizr/
+/Taskfile.yml

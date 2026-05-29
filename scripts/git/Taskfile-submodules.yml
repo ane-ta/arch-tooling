@@ -1,0 +1,112 @@
+version: '3'
+
+tasks:
+
+# =====================  
+  init:
+    desc: "Initialize all submodules and download their content."
+    cmds:
+      - git submodule update --init --recursive
+    status:
+      - test -f ./tools/arch-tooling/Taskfile.yml
+  
+# =====================
+  update:
+    desc: "Update submodules to latest remote version."
+    cmds:
+      - echo "Обновляю инструменты..."
+      - git submodule update --remote --merge
+      - echo "Готово! Не забудь закоммитить обновление ссылки в проекте."
+  
+# =====================
+  push:
+    desc: "Push project with all submodules to remote if they have any commits."
+    cmds:
+      - git push --recurse-submodules=on-demand
+
+# =====================
+  status:
+    desc: "Show status of every submodule."
+    cmds:
+      - git submodule status --recursive
+  
+# =====================
+  update_in_repos:
+    desc: "Update specific submodule in all projects."
+    requires:
+      vars:
+        [REPOS_DIR, SUBMODULE_REL_PATH]
+    vars:
+      MAKE_COMMIT: '{{.MAKE_COMMIT | default false}}'    
+      MAKE_PUSH: '{{.MAKE_PUSH | default false}}'  
+    sources:
+      - "{{.REPOS_DIR}}/*/.gitmodules"
+    status:
+      - exit 1
+    cmds:
+      - cmd: |
+          cat << EOF
+          "=========================================================="
+          "🔄 Обновление {{.SUBMODULE_REL_PATH}} в репозиториях папки: {{.REPOS_DIR}}"
+          "=========================================================="
+          EOF
+          #
+      - for: sources
+        task: update_in_repo
+        vars:
+          REPO_DIR:           '{{.ITEM | toSlash | replace "/.gitmodules" ""}}'
+          SUBMODULE_REL_PATH: '{{.SUBMODULE_REL_PATH}}'
+          MAKE_COMMIT:        '{{.MAKE_COMMIT}}'
+          MAKE_PUSH:          '{{.MAKE_PUSH}}'
+
+# =====================
+  update_in_repo:
+    desc: "Update specific submodule in a project."
+    requires:
+      vars:
+        [REPO_DIR, SUBMODULE_REL_PATH]
+    vars:
+      REPO_NAME:    '{{.REPO_DIR | toSlash | base}}'
+      MAKE_COMMIT:  '{{.MAKE_COMMIT | default false}}'
+      MAKE_PUSH:    '{{.MAKE_PUSH | default false}}'
+    
+    preconditions:
+      - sh: test -d {{.REPO_DIR}}
+        msg: "Папки {{.REPO_DIR}} не существует"
+
+      - sh: test -f {{.REPO_DIR}}/.gitmodules
+        msg: "Файл .gitmodules не найден в {{.REPO_DIR}}"
+
+      - sh: cd "{{.REPO_DIR}}" && git config --file .gitmodules --get submodule.{{.SUBMODULE_REL_PATH}}.path
+        msg: "Проект не содержит {{.SUBMODULE_REL_PATH}}"
+
+    cmds:
+      - cmd: |
+          cat << EOF
+          "=========================================================="
+          "🔄 Обновление {{.SUBMODULE_REL_PATH}} в репозитории: {{.REPO_NAME}}"
+          "=========================================================="
+          EOF
+          #
+          cd "{{.REPO_DIR}}" 
+          git submodule update --remote --checkout {{.SUBMODULE_REL_PATH}}
+          echo "-> Обновлено"
+          git status -sb
+
+      - cmd: |
+          echo
+          echo "Коммит обновления.."
+          cd "{{.REPO_DIR}}"
+          git restore --staged .
+          git add {{.SUBMODULE_REL_PATH}}
+          git diff --cached --quiet || git commit -m "auto: update {{.SUBMODULE_REL_PATH}} to remote"
+          git status -s
+        if: '{{eq .MAKE_COMMIT "true"}}'
+
+      - cmd: |
+          echo
+          echo "Pushing.."
+          cd "{{.REPO_DIR}}"
+          git push
+          git status -sb
+        if: '{{eq .MAKE_PUSH "true"}}'
